@@ -78,7 +78,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "ETC event collector based on qframe, inspired by qcollect,logstash and fullerite"
 	app.Usage = "qframe-events [options]"
-	app.Version = "0.0.0"
+	app.Version = "0.1.0"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "config",
