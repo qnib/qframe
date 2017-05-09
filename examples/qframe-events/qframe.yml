@@ -8,7 +8,7 @@ filter:
   tcp:
       port: "11001"
   app-event:
-    pattern-dir: "/usr/local/src/github.com/qnib/qframe/examples/qframe-events/patterns"
+    pattern-dir: "/etc/qframe/patterns"
     inputs: "tcp"
     pattern: "%{LOG}"
     overwrite-message-key: "msg"

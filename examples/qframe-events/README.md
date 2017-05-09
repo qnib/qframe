@@ -28,6 +28,7 @@ $ docker run -ti --name qframe-collector-tcp --rm -e SKIP_ENTRYPOINTS=1 -p 11001
            -v ${GOPATH}/src/github.com/qnib/qframe-types:/usr/local/src/github.com/qnib/qframe-types \
            -v ${GOPATH}/src/github.com/qnib/qframe-utils:/usr/local/src/github.com/qnib/qframe-utils \
            -v /var/run/docker.sock:/var/run/docker.sock \
+           -v $(pwd)/patterns:/etc/qframe/patterns \
            -w /usr/local/src/github.com/qnib/qframe/examples/qframe-events \
             qnib/uplain-golang bash
 ```
