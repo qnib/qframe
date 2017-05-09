@@ -11,6 +11,6 @@ FROM qnib/uplain-init
 COPY --from=0 /usr/local/src/github.com/qnib/qframe-events/qframe-events \
      /usr/local/bin/
 COPY qframe.yml /etc/
-COPY patterns
+COPY patterns /etc/qframe/patterns
 ENV SKIP_ENTRYPOINTS=true
 CMD ["qframe-events", "--config", "/etc/qframe.yml"]
