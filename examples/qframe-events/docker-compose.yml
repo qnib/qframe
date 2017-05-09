@@ -1,0 +1,34 @@
+version: '3'
+services:
+  elasticsearch:
+    image: qnib/plain-elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      ES_HEAP_MAX: "512m"
+      ES_HEAP_MIN: "512m"
+      ES_NODE_MASTER: "true"
+      ES_NODE_DATA: "true"
+  kibana:
+    image: qnib/plain-kibana5
+    ports:
+      - "5601:5601"
+    environment:
+        ES_MASTER_HOST: qframe_elasticsearch
+  influxdb:
+      image: qnib/plain-influxdb
+      environment:
+       - INFLUXDB_DATABASES=qframe
+       - INFLUXDB_META_LOGGING=true
+      volumes:
+       - /opt/influxdb/shared
+      ports:
+       - 8083:8083
+       - 8086:8086
+  grafana:
+    image: qnib/plain-grafana4
+    ports:
+     - 3000:3000
+    environment:
+     - INFLUXDB_HOST=qframe_influxdb
+     - INFLUXDB_DB=qframe

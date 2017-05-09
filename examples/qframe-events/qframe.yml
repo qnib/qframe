@@ -1,0 +1,25 @@
+---
+log:
+  level: "info"
+collector:
+  docker-events:
+    docker-host: "unix:///var/run/docker.sock"
+filter:
+  tcp:
+      port: "11001"
+  app-event:
+    pattern-dir: "/usr/local/src/github.com/qnib/qframe/examples/qframe-events/patterns"
+    inputs: "tcp"
+    pattern: "%{LOG}"
+    overwrite-message-key: "msg"
+handler:
+  es_logstash:
+    host: "172.17.0.1"
+    inputs: "app-event"
+  influxdb:
+    database: "qframe"
+    host: "172.17.0.1"
+    inputs: "internal,container-stats"
+    pattern: "%{INT:number}"
+    ticker-msec: "2000"
+    batch-size: "500"
