@@ -9,12 +9,20 @@ services:
       ES_HEAP_MIN: "512m"
       ES_NODE_MASTER: "true"
       ES_NODE_DATA: "true"
+    labels:
+      org.qnib.qframe.skip-log: "true"
+    healthcheck:
+      disable: true
   kibana:
     image: qnib/plain-kibana5
     ports:
       - "5601:5601"
     environment:
         ES_MASTER_HOST: qframe_elasticsearch
+    labels:
+        org.qnib.qframe.skip-log: "true"
+    healthcheck:
+      disable: true
   influxdb:
       image: qnib/plain-influxdb
       environment:
@@ -23,8 +31,12 @@ services:
       volumes:
        - /opt/influxdb/shared
       ports:
-       - 8083:8083
-       - 8086:8086
+        - 8083:8083
+        - 8086:8086
+      labels:
+        org.qnib.qframe.skip-log: "true"
+    healthcheck:
+      disable: true
   grafana:
     image: qnib/plain-grafana4
     ports:
@@ -32,3 +44,7 @@ services:
     environment:
      - INFLUXDB_HOST=qframe_influxdb
      - INFLUXDB_DB=qframe
+    labels:
+      org.qnib.qframe.skip-log: "true"
+    healthcheck:
+      disable: true

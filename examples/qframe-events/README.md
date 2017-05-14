@@ -20,6 +20,7 @@ $ docker run -ti --name qframe-collector-tcp --rm -e SKIP_ENTRYPOINTS=1 -p 11001
            -v ${GOPATH}/src/github.com/qnib/qframe-collector-docker-events:/usr/local/src/github.com/qnib/qframe-collector-docker-events \
            -v ${GOPATH}/src/github.com/qnib/qframe-collector-internal/lib:/usr/local/src/github.com/qnib/qframe-collector-internal/lib \
            -v ${GOPATH}/src/github.com/qnib/qframe-collector-tcp/lib:/usr/local/src/github.com/qnib/qframe-collector-tcp/lib \
+           -v ${GOPATH}/src/github.com/qnib/qframe-collector-gelf/lib:/usr/local/src/github.com/qnib/qframe-collector-gelf/lib \
            -v ${GOPATH}/src/github.com/qnib/qframe-filter-grok/lib:/usr/local/src/github.com/qnib/qframe-filter-grok/lib \
            -v ${GOPATH}/src/github.com/qnib/qframe-filter-inventory/lib:/usr/local/src/github.com/qnib/qframe-filter-inventory/lib \
            -v ${GOPATH}/src/github.com/qnib/qframe-handler-elasticsearch/lib:/usr/local/src/github.com/qnib/qframe-handler-elasticsearch/lib \
@@ -37,6 +38,7 @@ $ docker run -ti --name qframe-collector-tcp --rm -e SKIP_ENTRYPOINTS=1 -p 11001
 $ govendor update github.com/qnib/qframe-collector-docker-events/lib \
 	            github.com/qnib/qframe-collector-internal/lib \
 	            github.com/qnib/qframe-collector-tcp/lib \
+	            github.com/qnib/qframe-collector-gelf/lib \
 	            github.com/qnib/qframe-filter-grok/lib \
 	            github.com/qnib/qframe-filter-inventory/lib \
 	            github.com/qnib/qframe-handler-elasticsearch/lib \
