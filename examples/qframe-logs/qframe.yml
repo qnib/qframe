@@ -1,0 +1,37 @@
+---
+log:
+  level: "debug"
+  only-plugins: "app-log,es_logstash,docker-log"
+collector:
+  docker-events:
+    docker-host: "unix:///var/run/docker.sock"
+  docker-log:
+    docker-host: "unix:///var/run/docker.sock"
+    inputs: "docker-events"
+    skip-container-label: "org.qframe.skip-logs"
+filter:
+  app-log:
+    pattern-dir: "/etc/qframe/patterns"
+    inputs: "docker-log"
+    pattern: "%{LOG}"
+    overwrite-message-key: "msg"
+  es-log:
+      pattern-dir: "/etc/qframe/patterns"
+      inputs: "docker-log"
+      pattern: "%{ES_LOG_LINE}"
+      overwrite-message-key: "msg"
+handler:
+  es_logstash:
+    host: "172.17.0.1"
+    inputs: "app-log"
+    source-success: "true"
+    kv-to-field: "docker-log.log_level:Level,docker-log.log_msg:msg"
+    kv-skip: "docker-log.LOG,es-log.ES_LOG_LINE"
+  influxdb:
+    database: "qframe"
+    host: "172.17.0.1"
+    inputs: "internal,container-stats"
+    pattern: "%{INT:number}"
+    ticker-msec: "2000"
+    batch-size: "500"
+
