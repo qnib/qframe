@@ -8,7 +8,7 @@ collector:
   docker-log:
     docker-host: "unix:///var/run/docker.sock"
     inputs: "docker-events"
-    skip-container-label: "org.qframe.skip-logs"
+    skip-container-label: "org.qnib.skip-logs"
 filter:
   app-log:
     pattern-dir: "/etc/qframe/patterns"
