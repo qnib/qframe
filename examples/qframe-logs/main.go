@@ -48,8 +48,8 @@ func Run(ctx *cli.Context) {
 	check_err(phi.Name, err)
 	go phi.Run()
 	// Start Elasticsearch handler
-	phe := qframe_handler_elasticsearch.NewElasticsearch(qChan, *cfg, "es_logstash")
-	check_err(phi.Name, err)
+	phe, err := qframe_handler_elasticsearch.New(qChan, *cfg, "es_logstash")
+	check_err(phe.Name, err)
 	go phe.Run()
 	// Inventory
 	pfi := qframe_filter_inventory.New(qChan, *cfg, "inventory")

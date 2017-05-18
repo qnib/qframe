@@ -8,15 +8,16 @@ import (
 	"github.com/codegangsta/cli"
 
 	"github.com/qnib/qframe-types"
-	"github.com/qnib/qframe-collector-docker-log/lib"
 	"github.com/qnib/qframe-collector-docker-events/lib"
 	"github.com/qnib/qframe-handler-influxdb/lib"
 	"github.com/qnib/qframe-collector-internal/lib"
-	"github.com/qnib/qframe-handler-elasticsearch/lib"
 	"github.com/qnib/qframe-filter-inventory/lib"
 	"github.com/qnib/qframe-filter-grok/lib"
 	"github.com/qnib/qframe-filter-metrics/lib"
 	"github.com/qnib/qframe-collector-docker-stats/lib"
+	"github.com/qnib/qframe-filter-docker-stats/lib"
+	"github.com/qnib/qframe-filter-statsd/lib"
+	"github.com/qnib/qframe-collector-tcp/lib"
 )
 
 const (
@@ -46,7 +47,6 @@ func Run(ctx *cli.Context) {
 	cfg.Providers = append(cfg.Providers, config.NewCLI(ctx, false))
 	qChan := qtypes.NewQChan()
 	qChan.Broadcast()
-	ll, _ := cfg.String("log.level")
 	//////// Handlers
 	// Start InfluxDB
 	phi, err := qframe_handler_influxdb.New(qChan, cfg, "influxdb")
