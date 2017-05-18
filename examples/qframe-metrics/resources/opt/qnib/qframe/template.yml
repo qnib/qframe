@@ -1,0 +1,38 @@
+---
+log:
+  level: "info"
+  #only-plugins: "docker-events,statsd,tcp,inventory"
+collector:
+  docker-events:
+    docker-host: "unix:///var/run/docker.sock"
+  docker-stats:
+    inputs: "docker-events"
+  tcp:
+    bind-port: "11001"
+    bind-host: "0.0.0.0"
+filter:
+  container-stats:
+    inputs: "docker-stats"
+  opentsdb:
+    pattern-dir: "/etc/qframe/patterns/"
+    pattern: "%{OPENTSDB}"
+    inputs: "tcp"
+  metrics:
+    inputs: "opentsdb"
+  statsd:
+    inputs: "opentsdb"
+    source-success: "false"
+    percentiles: "90,95,99"
+    send-metric-ms: 5000
+handler:
+  es_logstash:
+    host: "172.17.0.1"
+    inputs: "docker-events"
+  influxdb:
+    database: "qframe"
+    host: "172.17.0.1"
+    inputs: "internal,container-stats,metrics,statsd"
+    pattern: "%{INT:number}"
+    ticker-msec: "2000"
+    batch-size: "500"
+
