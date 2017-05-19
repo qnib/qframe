@@ -25,6 +25,8 @@ services:
     image: qnib/qframe-metrics
     environment:
      - LOG_LEVEL=info
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
   client:
     image: qnib/plain-qframe-client
     command: wait.sh
