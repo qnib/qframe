@@ -93,23 +93,23 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "ExgxOZ+LyDeJYkLWKsSI8BL8wto=",
+			"checksumSHA1": "ZWc4qmNC6ilGDjmRBB/NLchGfzY=",
 			"path": "github.com/qnib/qframe-collector-docker-events/lib",
-			"revision": "baefc686baca75565dc48b13382046d6350246ca",
-			"revisionTime": "2017-05-17T11:01:47Z"
+			"revision": "353eef23e31881813b4257f49c3c5e49edf955b1",
+			"revisionTime": "2017-05-21T15:47:12Z"
 		},
 		{
 			"path": "github.com/qnib/qframe-collector-docker-log/lib",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "orCoBolpWZYl4lEmUyt1sBAFnaA=",
+			"checksumSHA1": "pbfe2Mr1VGeHIdSZ1cpCyp+0O5s=",
 			"path": "github.com/qnib/qframe-collector-docker-stats/lib",
 			"revision": "f9ccfccc70cb8742176382f397193dfb0fa66eaf",
 			"revisionTime": "2017-05-17T11:02:15Z"
 		},
 		{
-			"checksumSHA1": "vtdp8OaVRlUw29iz5nzZQAEsuvE=",
+			"checksumSHA1": "BYaXWwfOSkLVatY5z8u6AQpBK0Y=",
 			"path": "github.com/qnib/qframe-collector-internal/lib",
 			"revision": "7ff233d0f704b2c03cbd3cdb6e490576ea993c31",
 			"revisionTime": "2017-05-17T11:05:15Z"
@@ -121,23 +121,28 @@
 			"revisionTime": "2017-05-18T14:32:35Z"
 		},
 		{
-			"checksumSHA1": "fZaxIvyMJo5vgSv+o7OrFm3KaDY=",
+			"checksumSHA1": "my9IVcr7rB7soiYrY3gNpkulZNM=",
 			"path": "github.com/qnib/qframe-filter-docker-stats/lib",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "IeRrSduNzHOaKFH+1NiR1Z+Dmbk=",
+			"checksumSHA1": "a0dQUX3LI/Xvbcs96KXI4bikgl4=",
 			"path": "github.com/qnib/qframe-filter-grok/lib",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "7bGA0KyODuzKsIiR/Q8eKKNuYnA=",
+			"checksumSHA1": "poxOIboK3FAmnxDNKoe248h/LAs=",
 			"path": "github.com/qnib/qframe-filter-inventory/lib",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "Dq2396Vp/iJYyrsuMZ3WUgtlJ0E=",
+			"checksumSHA1": "YhBoGfblX/ZG+nFtZJGgu0cAucA=",
 			"path": "github.com/qnib/qframe-filter-metrics/lib",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "gByg3SYE9FIXrGCNvL3TqeSA8Wo=",
+			"path": "github.com/qnib/qframe-filter-statsd/lib",
 			"revision": ""
 		},
 		{
@@ -145,7 +150,7 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "zTbQ3oIRELtP1cpKBe6ljBFke3U=",
+			"checksumSHA1": "SLcBIttcJqnn1L5acRUrbK4xvX8=",
 			"path": "github.com/qnib/qframe-handler-influxdb/lib",
 			"revision": ""
 		},
@@ -160,16 +165,21 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "umHmnmHdYs91B5Em+lH2g/69itM=",
+			"checksumSHA1": "USZOGqlm2vTrbHuBUZs00kshyQA=",
 			"path": "github.com/qnib/qframe-types",
-			"revision": "263289624aa997df6cc43b5a71b872a1a3a8fbb1",
-			"revisionTime": "2017-05-18T11:10:54Z"
+			"revision": "7ef4941f1797e3a90032e063aaba87ba06a0f6e0",
+			"revisionTime": "2017-05-21T09:21:35Z"
 		},
 		{
-			"checksumSHA1": "cXF2ScH6MC6Y3rijJx6usaA1prY=",
+			"checksumSHA1": "Urhq3MJWVz6GbfE0AFQXkDsSPyQ=",
 			"path": "github.com/qnib/qframe-utils",
-			"revision": "e63cbba7dd91ddc656d6f1a24e25a62ad8454620",
-			"revisionTime": "2017-04-22T14:06:33Z"
+			"revision": "32f577044c9bcebb4c9101215b12d496e30c60fb",
+			"revisionTime": "2017-05-21T09:22:01Z"
+		},
+		{
+			"checksumSHA1": "p/8XBy4hoBplx2cHeyxd0UoS+nc=",
+			"path": "github.com/qnib/statsdaemon/lib",
+			"revision": ""
 		},
 		{
 			"path": "github.com/vjeantet/grok",

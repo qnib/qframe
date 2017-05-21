@@ -1,7 +1,7 @@
 ---
 log:
-  level: "debug"
-  only-plugins: "docker-events,statsd,tcp,inventory"
+  level: "info"
+  #only-plugins: "container-stats"
 collector:
   docker-events:
     docker-host: "unix:///var/run/docker.sock"

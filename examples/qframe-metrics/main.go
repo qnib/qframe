@@ -60,11 +60,11 @@ func Run(ctx *cli.Context) {
 	// StatsD
 	pfs, err := qframe_filter_statsd.New(qChan, cfg, "statsd")
 	check_err(pfs.Name, err)
-	go pfs.Run()
+	//go pfs.Run()
 	// Container Stats
-	pfc, err := qframe_filter_docker_stats.New(qChan, cfg, "container-stats")
-	check_err(pfc.Name, err)
-	go pfc.Run()
+	pfcs, err := qframe_filter_docker_stats.New(qChan, cfg, "container-stats")
+	check_err(pfcs.Name, err)
+	go pfcs.Run()
 	// Inventory
 	pfi, err := qframe_filter_inventory.New(qChan, cfg, "inventory")
 	check_err(pfi.Name, err)
