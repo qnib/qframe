@@ -1,7 +1,7 @@
 ---
 log:
-  level: "debug"
-  only-plugins: "app-log,es_logstash,docker-log"
+  level: "info"
+  #only-plugins: "app-log,es_logstash,docker-log"
 collector:
   docker-events:
     docker-host: "unix:///var/run/docker.sock"
