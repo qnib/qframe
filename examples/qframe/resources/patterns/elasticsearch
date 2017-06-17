@@ -1,0 +1,3 @@
+##### Elasticserach log
+# [2017-05-11T14:21:17,587][INFO ][o.e.c.r.a.DiskThresholdMonitor] [f6ab4d0f2ade] rerouting shards: [high disk watermark exceeded on one or more nodes]
+ES_LOG_LINE \[%{GREEDYDATA:time}\]\[%{LOG_LEVEL:log_level}\s*\]\[%{GREEDYDATA:proc}\]\s*\[%{WORD:hostname}\]\s*%{GREEDYDATA:msg}

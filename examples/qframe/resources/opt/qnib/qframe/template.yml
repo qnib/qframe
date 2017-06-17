@@ -1,0 +1,60 @@
+---
+log:
+  level: "info"
+  #only-plugins: "docker-events,statsd,tcp,inventory"
+
+collector:
+  docker-events:
+    docker-host: "DOCKER_HOST"
+  docker-stats:
+    inputs: "docker-events"
+    docker-host: "DOCKER_HOST"
+  tcp:
+    bind-port: "11001"
+    bind-host: "0.0.0.0"
+
+filter:
+  container-stats:
+    inputs: "docker-stats"
+  opentsdb:
+    pattern-dir: "/etc/qframe/patterns/"
+    pattern: "%{OPENTSDB}"
+    inputs: "tcp"
+  statsd:
+    inputs: "opentsdb"
+    source-success: "false"
+    percentiles: "90,95,99"
+    send-metric-ms: 5000
+  app-log:
+    pattern-dir: "/etc/qframe/patterns"
+    inputs: "statsd"
+    source-success: "false"
+    pattern: "%{LOG}"
+    overwrite-message-key: "msg"
+  es-log:
+    pattern-dir: "/etc/qframe/patterns"
+    inputs: "app-log"
+    source-success: "false"
+    pattern: "%{ES_LOG_LINE}"
+    overwrite-message-key: "msg"
+  app-event:
+    pattern-dir: "/etc/qframe/patterns"
+    inputs: "es-log"
+    source-success: "false"
+    pattern: "%{EVENT}"
+    overwrite-message-key: "msg"
+  metrics:
+    inputs: "opentsdb,docker-events"
+
+handler:
+  es_logstash:
+    host: "ELASTICSEARCH_HOST"
+    inputs: "docker-events"
+  influxdb:
+    database: "INFLUXDB_DB"
+    host: "INFLUXDB_HOST"
+    inputs: "internal,container-stats,metrics,statsd"
+    pattern: "%{INT:number}"
+    ticker-msec: "2000"
+    batch-size: "500"
+

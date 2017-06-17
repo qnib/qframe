@@ -1,0 +1,2 @@
+# OpenTSDB format with prefixed action
+OPENTSDB put %{WORD:name} %{POSINT:time} %{BASE10NUM:value}( %{GREEDYDATA:tags})?
