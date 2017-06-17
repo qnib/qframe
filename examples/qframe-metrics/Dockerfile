@@ -2,8 +2,8 @@ FROM qnib/uplain-golang
 
 WORKDIR /usr/local/src/github.com/qnib/qframe/examples/qframe-metrics
 COPY main.go .
-COPY vendor/vendor.json vendor/vendor.json
-RUN govendor fetch -v +m
+COPY vendor vendor
+#RUN govendor fetch -v +m
 RUN govendor install
 
 FROM qnib/uplain-init

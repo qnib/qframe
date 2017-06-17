@@ -1,30 +1,29 @@
 package main
 
 import (
+	"github.com/codegangsta/cli"
+	"github.com/zpatrick/go-config"
 	"log"
 	"os"
 	"sync"
-	"github.com/zpatrick/go-config"
-	"github.com/codegangsta/cli"
 
-	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-collector-docker-events/lib"
-	"github.com/qnib/qframe-handler-influxdb/lib"
-	"github.com/qnib/qframe-collector-internal/lib"
-	"github.com/qnib/qframe-filter-inventory/lib"
-	"github.com/qnib/qframe-filter-grok/lib"
-	"github.com/qnib/qframe-filter-metrics/lib"
 	"github.com/qnib/qframe-collector-docker-stats/lib"
-	"github.com/qnib/qframe-filter-docker-stats/lib"
-	"github.com/qnib/qframe-filter-statsd/lib"
+	"github.com/qnib/qframe-collector-internal/lib"
 	"github.com/qnib/qframe-collector-tcp/lib"
+	"github.com/qnib/qframe-filter-docker-stats/lib"
+	"github.com/qnib/qframe-filter-grok/lib"
+	"github.com/qnib/qframe-filter-inventory/lib"
+	"github.com/qnib/qframe-filter-metrics/lib"
+	"github.com/qnib/qframe-filter-statsq/lib"
+	"github.com/qnib/qframe-handler-influxdb/lib"
+	"github.com/qnib/qframe-types"
 )
 
 const (
 	dockerHost = "unix:///var/run/docker.sock"
-	dockerAPI = "v1.29"
+	dockerAPI  = "v1.30"
 )
-
 
 func check_err(pname string, err error) {
 	if err != nil {
@@ -57,10 +56,10 @@ func Run(ctx *cli.Context) {
 	pfm, err := qframe_filter_grok.New(qChan, cfg, "opentsdb")
 	check_err(pfm.Name, err)
 	go pfm.Run()
-	// StatsD
-	pfs, err := qframe_filter_statsd.New(qChan, cfg, "statsd")
+	// StatsQ
+	pfs, err := qframe_filter_statsq.New(qChan, cfg, "statsq")
 	check_err(pfs.Name, err)
-	//go pfs.Run()
+	go pfs.Run()
 	// Container Stats
 	pfcs, err := qframe_filter_docker_stats.New(qChan, cfg, "container-stats")
 	check_err(pfcs.Name, err)

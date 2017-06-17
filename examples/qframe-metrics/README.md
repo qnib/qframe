@@ -87,7 +87,7 @@ An already [prepared dashboard in Grafana](http://localhost:3000/dashboard/db/qf
 ## Development
 
 ```bash
-$ docker run -ti --name qframe --rm -e SKIP_ENTRYPOINTS=1 \
+$ docker run -ti --name qframe --rm -e SKIP_ENTRYPOINTS=1 --no-healthcheck -p 11001:11001 \
             -v ${GOPATH}/src/github.com/qnib/qframe/examples/qframe-metrics:/usr/local/src/github.com/qnib/qframe/examples/qframe-metrics \
             -v ${GOPATH}/src/github.com/qnib/qframe-collector-tcp:/usr/local/src/github.com/qnib/qframe-collector-tcp \
             -v ${GOPATH}/src/github.com/qnib/qframe-collector-internal:/usr/local/src/github.com/qnib/qframe-collector-internal \
@@ -97,13 +97,13 @@ $ docker run -ti --name qframe --rm -e SKIP_ENTRYPOINTS=1 \
             -v ${GOPATH}/src/github.com/qnib/qframe-filter-grok/lib:/usr/local/src/github.com/qnib/qframe-filter-grok/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-filter-inventory/lib:/usr/local/src/github.com/qnib/qframe-filter-inventory/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-filter-metrics/lib:/usr/local/src/github.com/qnib/qframe-filter-metrics/lib \
-            -v ${GOPATH}/src/github.com/qnib/qframe-filter-statsd/lib:/usr/local/src/github.com/qnib/qframe-filter-statsd/lib \
+            -v ${GOPATH}/src/github.com/qnib/qframe-filter-statsq/lib:/usr/local/src/github.com/qnib/qframe-filter-statsq/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-inventory/lib:/usr/local/src/github.com/qnib/qframe-inventory/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-handler-influxdb/lib:/usr/local/src/github.com/qnib/qframe-handler-influxdb/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-handler-log/lib:/usr/local/src/github.com/qnib/qframe-handler-log/lib \
             -v ${GOPATH}/src/github.com/qnib/qframe-types:/usr/local/src/github.com/qnib/qframe-types \
             -v ${GOPATH}/src/github.com/qnib/qframe-utils:/usr/local/src/github.com/qnib/qframe-utils \
-            -v ${GOPATH}/src/github.com/qnib/statsdaemon/lib:/usr/local/src/github.com/qnib/statsdaemon/lib \
+            -v ${GOPATH}/src/github.com/qnib/statsq/lib:/usr/local/src/github.com/qnib/statsq/lib \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v $(pwd)/resources/patterns/:/etc/gcollect/patterns/ \
             -w /usr/local/src/github.com/qnib/qframe/examples/qframe-metrics \
@@ -116,11 +116,11 @@ $ govendor update github.com/qnib/qframe-collector-docker-events/lib \
                   github.com/qnib/qframe-filter-grok/lib \
                   github.com/qnib/qframe-filter-metrics/lib \
                   github.com/qnib/qframe-filter-inventory/lib \
-                  github.com/qnib/qframe-filter-statsd/lib \
+                  github.com/qnib/qframe-filter-statsq/lib \
                   github.com/qnib/qframe-inventory/lib \
                   github.com/qnib/qframe-handler-influxdb/lib \
                   github.com/qnib/qframe-handler-log/lib \
-                  github.com/qnib/statsdaemon/lib \
+                  github.com/qnib/statsq/lib \
                   github.com/qnib/qframe-types \
                   github.com/qnib/qframe-utils
 $ govendor fetch -v +m

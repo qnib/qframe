@@ -19,7 +19,7 @@ filter:
     inputs: "tcp"
   metrics:
     inputs: "opentsdb"
-  statsd:
+  statsq:
     inputs: "opentsdb"
     source-success: "false"
     percentiles: "90,95,99"
@@ -31,8 +31,7 @@ handler:
   influxdb:
     database: "qframe"
     host: "172.17.0.1"
-    inputs: "internal,container-stats,metrics,statsd"
-    pattern: "%{INT:number}"
+    inputs: "internal,container-stats,metrics,statsq,filter.statsq"
     ticker-msec: "2000"
     batch-size: "500"
 
