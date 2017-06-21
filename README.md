@@ -47,7 +47,8 @@ The following plugins are available.
  Can be queried by other plugins sending `ContainerRequests down the `Data` channel.
 - [grok](https://github.com/qnib/qframe-filter-grok) Allows for matching `QMsg` with GROK patterns (typed RegEx, much nicer to use then RegExp).
 - [docker-stats](https://github.com/qnib/qframe-filter-docker-stats) Potential filter to aggregate or transform metrics comming from the `docker-stats` collector.
-- [qframe-filter-metrics](https://github.com/qnib/qframe-filter-metrics) Assumes the keys `name`, `time`, `value` and optional `tags` and transforms it to a `qtypes.Metric`
+- [StatsQ](https://github.com/qnib/qframe-filter-statsq) StatsD implementation allowing for tags.
+- [metrics](https://github.com/qnib/qframe-filter-metrics) Assumes the keys `name`, `time`, `value` and optional `tags` and transforms it to a `qtypes.Metric`
 
 #### Handlers
 
