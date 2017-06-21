@@ -2,9 +2,8 @@ FROM qnib/uplain-golang
 
 WORKDIR /usr/local/src/github.com/qnib/qframe-events
 COPY main.go ./main.go
-COPY vendor/vendor.json ./vendor/vendor.json
-RUN govendor fetch +m \
- && govendor build
+COPY vendor ./vendor
+RUN govendor build
 
 FROM qnib/uplain-init
 

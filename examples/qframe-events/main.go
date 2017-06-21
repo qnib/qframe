@@ -43,30 +43,31 @@ func Run(ctx *cli.Context) {
 	qChan := qtypes.NewQChan()
 	qChan.Broadcast()
 	// Start InfluxDB handler
-	phi, err := qframe_handler_influxdb.New(qChan, *cfg, "influxdb")
+	phi, err := qframe_handler_influxdb.New(qChan, cfg, "influxdb")
 	check_err(phi.Name, err)
 	go phi.Run()
 	// Start Elasticsearch handler
-	phe := qframe_handler_elasticsearch.NewElasticsearch(qChan, *cfg, "es_logstash")
-	check_err(phi.Name, err)
+	phe, err := qframe_handler_elasticsearch.New(qChan, cfg, "es_logstash")
+	check_err(phe.Name, err)
 	go phe.Run()
 	// Inventory
-	pfi := qframe_filter_inventory.New(qChan, *cfg, "inventory")
+	pfi, err := qframe_filter_inventory.New(qChan, cfg, "inventory")
+	check_err(pfi.Name, err)
 	go pfi.Run()
 	// Event filter
-	pfg, err := qframe_filter_grok.New(qChan, *cfg, "app-event")
+	pfg, err := qframe_filter_grok.New(qChan, cfg, "app-event")
 	check_err(pfg.Name, err)
 	go pfg.Run()
 	// start docker-events
-	pe, err := qframe_collector_docker_events.New(qChan, *cfg, "docker-events")
+	pe, err := qframe_collector_docker_events.New(qChan, cfg, "docker-events")
 	check_err(pe.Name, err)
 	go pe.Run()
 	// TCP collector
-	pct, err := qframe_collector_tcp.New(qChan, *cfg, "tcp")
+	pct, err := qframe_collector_tcp.New(qChan, cfg, "tcp")
 	check_err(pct.Name, err)
 	go pct.Run()
 	// Internal metrics collector
-	pci, err := qframe_collector_internal.New(qChan, *cfg, "internal")
+	pci, err := qframe_collector_internal.New(qChan, cfg, "internal")
 	check_err(pci.Name, err)
 	go pci.Run()
 	wg := sync.WaitGroup{}
