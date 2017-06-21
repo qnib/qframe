@@ -14,6 +14,8 @@ ENV ENTRYPOINTS_DIR=/opt/qnib/entry/ \
     INFLUXDB_HOST=172.17.0.1 \
     GROK_PATTERNS_DIR=/etc/qframe/patterns
 
+RUN apt-get update \
+ && apt-get install -y vim
 COPY --from=0 /usr/local/bin/qframe /usr/local/bin/
 COPY resources/opt/qnib/qframe/template.yml /opt/qnib/qframe/template.yml
 COPY resources/patterns /etc/qframe/patterns

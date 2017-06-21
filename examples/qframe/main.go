@@ -18,6 +18,8 @@ import (
 	"github.com/qnib/qframe-filter-docker-stats/lib"
 	"github.com/qnib/qframe-filter-statsq/lib"
 	"github.com/qnib/qframe-collector-tcp/lib"
+	"github.com/qnib/qframe-handler-elasticsearch/lib"
+	"github.com/qnib/qframe-collector-docker-log/lib"
 )
 
 const (
@@ -52,6 +54,14 @@ func Run(ctx *cli.Context) {
 	phi, err := qframe_handler_influxdb.New(qChan, cfg, "influxdb")
 	check_err(phi.Name, err)
 	go phi.Run()
+	// Start Elasticsearch handler to push to logstash
+	phe, err := qframe_handler_elasticsearch.New(qChan, cfg, "es_logstash")
+	check_err(phe.Name, err)
+	go phe.Run()
+	// Start Elasticsearch handler to push to events
+	phee, err := qframe_handler_elasticsearch.New(qChan, cfg, "es_events")
+	check_err(phee.Name, err)
+	go phee.Run()
 	//////// Filters
 	// GROK
 	pfm, err := qframe_filter_grok.New(qChan, cfg, "opentsdb")
@@ -98,6 +108,10 @@ func Run(ctx *cli.Context) {
 	pds, err := qframe_collector_docker_stats.New(qChan, cfg, "docker-stats")
 	check_err(pds.Name, err)
 	go pds.Run()
+	// start docker-logs
+	pdl, err := qframe_collector_docker_log.New(qChan, cfg, "docker-log")
+	check_err(pdl.Name, err)
+	go pdl.Run()
 	// TCP
 	pct, err := qframe_collector_tcp.New(qChan, cfg, "tcp")
 	check_err(pct.Name, err)

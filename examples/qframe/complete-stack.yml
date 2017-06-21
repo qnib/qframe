@@ -12,6 +12,8 @@ services:
     ports:
      - 8083:8083
      - 8086:8086
+    labels:
+      org.qnib.skip-logs: "true"
   grafana:
     image: qnib/plain-grafana4
     ports:
@@ -21,12 +23,54 @@ services:
      - INFLUXDB_DB=qframe
     volumes:
       - ./resources/grafana/sql/dashboards/:/opt/grafana/sql/dashboards/
+    labels:
+      org.qnib.skip-logs: "true"
+  elasticsearch:
+    image: qnib/plain-elasticsearch
+    healthcheck:
+      disable: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_HEAP_MAX: "512m"
+      ES_HEAP_MIN: "512m"
+      ES_NODE_MASTER: "true"
+      ES_NODE_DATA: "true"
+    #labels:
+    #  org.qnib.skip-logs: "true"
+  kibana:
+    image: qnib/plain-kibana5
+    healthcheck:
+      disable: true
+    ports:
+      - "5601:5601"
+    environment:
+        ES_MASTER_HOST: qframe_elasticsearch
+    labels:
+      org.qnib.skip-logs: "true"
   agent:
     image: qnib/qframe
+    ports:
+     - 11001:11001
     environment:
      - LOG_LEVEL=info
+     - INFLUXDB_HOST=172.17.0.1
+     - INFLUXDB_DB=qframe
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-  client:
+  info:
     image: qnib/plain-qframe-client
-    command: wait.sh
+    deploy:
+      replicas: 0
+    command: loop-log.sh INFO
+    environment:
+     - HOST=tasks.qframe_agent
+  warn:
+    image: qnib/plain-qframe-client
+    deploy:
+      replicas: 0
+    command: loop-log.sh WARN
+    environment:
+     - HOST=tasks.qframe_agent
+     - DELAY=3

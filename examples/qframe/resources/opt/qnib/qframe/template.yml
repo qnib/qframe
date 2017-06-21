@@ -1,7 +1,7 @@
 ---
 log:
   level: "info"
-  #only-plugins: "docker-events,statsd,tcp,inventory"
+  #only-plugins: "LOG_PLUGINS"
 
 collector:
   docker-events:
@@ -9,6 +9,10 @@ collector:
   docker-stats:
     inputs: "docker-events"
     docker-host: "DOCKER_HOST"
+  docker-log:
+    docker-host: "unix:///var/run/docker.sock"
+    inputs: "docker-events"
+    skip-container-label: "org.qnib.skip-logs"
   tcp:
     bind-port: "11001"
     bind-host: "0.0.0.0"
@@ -20,15 +24,14 @@ filter:
     pattern-dir: "/etc/qframe/patterns/"
     pattern: "%{OPENTSDB}"
     inputs: "tcp"
-  statsd:
+  statsq:
     inputs: "opentsdb"
     source-success: "false"
     percentiles: "90,95,99"
     send-metric-ms: 5000
   app-log:
     pattern-dir: "/etc/qframe/patterns"
-    inputs: "statsd"
-    source-success: "false"
+    inputs: "tcp,docker-log"
     pattern: "%{LOG}"
     overwrite-message-key: "msg"
   es-log:
@@ -47,9 +50,14 @@ filter:
     inputs: "opentsdb,docker-events"
 
 handler:
-  es_logstash:
+  es_events:
     host: "ELASTICSEARCH_HOST"
     inputs: "docker-events"
+  es_logstash:
+      host: "ELASTICSEARCH_HOST"
+      inputs: "app-log"
+      kv-to-field: "docker-log.log_level:Level,docker-log.log_msg:msg"
+      kv-skip: "docker-log.LOG"
   influxdb:
     database: "INFLUXDB_DB"
     host: "INFLUXDB_HOST"

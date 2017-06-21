@@ -125,9 +125,9 @@ func (p *Plugin) Run() {
 						qm.Message = v
 					}
 				}
-			}/* else {
-				p.Log("debug", fmt.Sprintf("No match of '%s' for message '%s'", p.pattern, qm.Message))
-			}*/
+			} else {
+				p.Log("trace", fmt.Sprintf("No match of '%s' for message '%s'", p.pattern, qm.Message))
+			}
 			p.QChan.Data.Send(qm)
 		}
 	}
