@@ -1,4 +1,4 @@
-version: '3'
+aersion: '3'
 services:
   influxdb:
     image: qnib/plain-influxdb
@@ -19,7 +19,7 @@ services:
     ports:
      - 3000:3000
     environment:
-     - INFLUXDB_HOST=qframe_influxdb
+     - INFLUXDB_HOST=tasks.influxdb
      - INFLUXDB_DB=qframe
     volumes:
       - ./resources/grafana/sql/dashboards/:/opt/grafana/sql/dashboards/
@@ -46,7 +46,7 @@ services:
     ports:
       - "5601:5601"
     environment:
-        ES_MASTER_HOST: qframe_elasticsearch
+        ES_MASTER_HOST: tasks.elasticsearch
     labels:
       org.qnib.skip-logs: "true"
   agent:
