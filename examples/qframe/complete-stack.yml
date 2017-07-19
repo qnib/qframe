@@ -1,4 +1,4 @@
-aersion: '3'
+version: '3'
 services:
   influxdb:
     image: qnib/plain-influxdb
