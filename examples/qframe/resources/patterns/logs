@@ -1,0 +1,3 @@
+# Structured log which is cee formated -> NOT WORKING YET :/
+LOG ^\[%{LOG_LEVEL:log_level}\]%{GREEDYDATA:log_msg}
+LOG_LEVEL (DEBUG|INFO|NOTICE|WARN|ERROR|CRITICAL|PANIC)

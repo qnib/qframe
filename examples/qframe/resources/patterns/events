@@ -1,0 +1,3 @@
+# Event log-line [001.001] Some event message
+EVENT ^\[%{EVENT_CODE:event_code}\]%{GREEDYDATA:event_msg}
+EVENT_CODE %{POSINT}\.%{POSINT}
