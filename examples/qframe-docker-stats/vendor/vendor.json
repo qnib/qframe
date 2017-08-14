@@ -1,0 +1,31 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "QXa/vl8SuIZ6upaqHmCtMREmGTM=",
+			"path": "github.com/qframe/cache-inventory",
+			"revision": "5a2490f4c53a8ab907668e64f8836fa9b3411dd5",
+			"revisionTime": "2017-07-12T08:05:45Z"
+		},
+		{
+			"checksumSHA1": "+iLh0tgGpd5fkL35FLmDe/wTa9M=",
+			"path": "github.com/qframe/cache-statsq",
+			"revision": "96651e72fc8d997e2ad09fa94c6528380e72ebbc",
+			"revisionTime": "2017-07-12T11:35:36Z"
+		},
+		{
+			"checksumSHA1": "gn57AA15dCsSuvKAp7d6O1j6J4Q=",
+			"path": "github.com/qframe/filter-grok",
+			"revision": "85ad7827b30b2b2918159e21683798fa65f1e0e5",
+			"revisionTime": "2017-07-12T07:22:17Z"
+		},
+		{
+			"checksumSHA1": "jRDG+NKZpzvMKuBV7z/r4G4nqRI=",
+			"path": "github.com/qframe/handler-influxdb",
+			"revision": "78510cafee8512c41be5064e03dd2ebe36da04a4",
+			"revisionTime": "2017-07-12T09:24:39Z"
+		}
+	],
+	"rootPath": "github.com/qnib/qframe/examples/qframe-docker-stats"
+}
