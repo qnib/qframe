@@ -2,18 +2,23 @@ package qtypes
 
 import (
 	"time"
+	"crypto/sha1"
+	"fmt"
 )
 
 const (
-	version = "0.5.0"
+	version = "0.5.11"
 )
 
 type Base struct {
 	BaseVersion string
+	ID				string
 	Time			time.Time
 	SourceID		int
 	SourcePath		[]string
 	SourceSuccess 	bool
+	Data 			map[string]string // Additional Data
+
 }
 
 func NewBase(src string) Base {
@@ -21,13 +26,26 @@ func NewBase(src string) Base {
 }
 
 func NewTimedBase(src string, t time.Time) Base {
-	return Base {
+	b := Base {
 		BaseVersion: version,
+		ID: "",
 		Time: t,
 		SourceID: 0,
 		SourcePath: []string{src},
 		SourceSuccess: true,
+		Data: map[string]string{},
 	}
+	return b
+}
+
+// GenDefaultID uses "<source>-<time.UnixNano()>" and does a sha1 hash.
+func (b *Base) GenDefaultID() string {
+	s := fmt.Sprintf("%s-%d", b.GetLastSource(), b.Time.UnixNano())
+	return Sha1HashString(s)
+}
+
+func (b *Base) GetMessageDigest() string {
+	return b.ID[:13]
 }
 
 func (base *Base) NewExtMetric(src, name string, metricTyp string, val float64, dimensions map[string]string, t time.Time, buffered bool) Metric {
@@ -59,6 +77,10 @@ func (b *Base) AppendSource(src string) {
 	b.SourcePath = append(b.SourcePath, src)
 }
 
+func (b *Base) GetLastSource() string {
+	return b.SourcePath[len(b.SourcePath)-1]
+}
+
 func (b *Base) IsLastSource(src string) bool {
 	return b.SourcePath[len(b.SourcePath)-1] == src
 }
@@ -71,4 +93,11 @@ func (b *Base) InputsMatch(inputs []string) bool {
 
 	}
 	return false
+}
+
+func Sha1HashString(s string) string {
+	h := sha1.New()
+	h.Write([]byte(s))
+	bs := h.Sum(nil)
+	return fmt.Sprintf("%x", bs)
 }

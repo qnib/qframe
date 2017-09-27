@@ -7,12 +7,12 @@ import (
 )
 
 
-func GetGID() uint64 {
+func GetGID() int {
 	b := make([]byte, 64)
 	b = b[:runtime.Stack(b, false)]
 	b = bytes.TrimPrefix(b, []byte("goroutine "))
 	b = b[:bytes.IndexByte(b, ' ')]
-	n, _ := strconv.ParseUint(string(b), 10, 64)
+	n, _ := strconv.Atoi(string(b))
 	return n
 }
 

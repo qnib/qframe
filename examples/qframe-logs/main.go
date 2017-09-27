@@ -6,15 +6,15 @@ import (
 	"sync"
 	"github.com/zpatrick/go-config"
 	"github.com/codegangsta/cli"
-
-	"github.com/qnib/qframe-types"
-	"github.com/qnib/qframe-collector-docker-log/lib"
-	"github.com/qnib/qframe-collector-docker-events/lib"
-	"github.com/qnib/qframe-handler-influxdb/lib"
-	"github.com/qnib/qframe-collector-internal/lib"
-	"github.com/qnib/qframe-handler-elasticsearch/lib"
-	"github.com/qnib/qframe-filter-inventory/lib"
-	"github.com/qnib/qframe-filter-grok/lib"
+	
+	"github.com/qframe/handler-elasticsearch"
+	"github.com/qframe/cache-inventory"
+	"github.com/qframe/handler-influxdb"
+	"github.com/qframe/filter-grok"
+	"github.com/qframe/collector-docker-events"
+	"github.com/qframe/collector-internal"
+	"github.com/qframe/collector-docker-logs"
+	"github.com/qframe/types/qchannel"
 )
 
 const (
@@ -41,37 +41,38 @@ func Run(ctx *cli.Context) {
 		log.Printf("[II] No config file found")
 	}
 	cfg.Providers = append(cfg.Providers, config.NewCLI(ctx, false))
-	qChan := qtypes.NewQChan()
+	qChan := qtypes_qchannel.NewQChan()
 	qChan.Broadcast()
 	// Start InfluxDB handler
-	phi, err := qframe_handler_influxdb.New(qChan, *cfg, "influxdb")
+	phi, err := qhandler_influxdb.New(qChan, *cfg, "influxdb")
 	check_err(phi.Name, err)
 	go phi.Run()
 	// Start Elasticsearch handler
-	phe, err := qframe_handler_elasticsearch.New(qChan, *cfg, "es_logstash")
+	phe, err := qhandler_elasticsearch.New(qChan, *cfg, "es_logstash")
 	check_err(phe.Name, err)
 	go phe.Run()
 	// Inventory
-	pfi := qframe_filter_inventory.New(qChan, *cfg, "inventory")
+	pfi, err := qcache_inventory.New(qChan, *cfg, "inventory")
+	check_err(pfi.Name, err)
 	go pfi.Run()
 	// App Log filter
-	pfg, err := qframe_filter_grok.New(qChan, *cfg, "app-log")
+	pfg, err := qfilter_grok.New(qChan, *cfg, "app-log")
 	check_err(pfg.Name, err)
 	go pfg.Run()
 	// Elasticsearch Log filter
-	pfgEs, err := qframe_filter_grok.New(qChan, *cfg, "es-log")
+	pfgEs, err := qfilter_grok.New(qChan, *cfg, "es-log")
 	check_err(pfgEs.Name, err)
 	go pfgEs.Run()
 	// start docker-events
-	pe, err := qframe_collector_docker_events.New(qChan, *cfg, "docker-events")
+	pe, err := qcollector_docker_events.New(qChan, *cfg, "docker-events")
 	check_err(pe.Name, err)
 	go pe.Run()
 	// Docker Logs collector
-	pcdl, err := qframe_collector_docker_log.New(qChan, *cfg, "docker-log")
+	pcdl, err := qcollector_docker_logs.New(qChan, *cfg, "docker-log")
 	check_err(pcdl.Name, err)
 	go pcdl.Run()
 	// Internal metrics collector
-	pci, err := qframe_collector_internal.New(qChan, *cfg, "internal")
+	pci, err := qcollector_internal.New(qChan, *cfg, "internal")
 	check_err(pci.Name, err)
 	go pci.Run()
 	wg := sync.WaitGroup{}

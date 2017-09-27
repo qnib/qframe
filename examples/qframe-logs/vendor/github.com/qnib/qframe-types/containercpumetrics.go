@@ -2,11 +2,9 @@ package qtypes
 
 import (
 	"strconv"
-	"strings"
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/docker/docker/api/types"
 	dc "github.com/fsouza/go-dockerclient"
-	"fmt"
 )
 
 // Inspired by https://github.com/elastic/beats/blob/master/metricbeat/module/docker/cpu/helper.go
@@ -37,19 +35,9 @@ func NewCPUStats(src Base, stats *dc.Stats) *CPUStats {
 	}
 }
 
+
 func (cs *CPUStats) ToMetrics(src string) []Metric {
-	dim := map[string]string{
-		"container_id": cs.Container.ID,
-		"container_name": strings.Trim(cs.Container.Names[0], "/"),
-		"image_name": cs.Container.Image,
-		"command": strings.Replace(cs.Container.Command, " ", "#", -1),
-		"created": fmt.Sprintf("%d", cs.Container.Created),
-	}
-	for k, v := range cs.Container.Labels {
-		dv := strings.Replace(v, " ", "#", -1)
-		dv = strings.Replace(v, ".", "_", -1)
-		dim[k] = dv
-	}
+	dim := AssembleDefaultDimensions(cs.Container)
 	return []Metric{
 		cs.NewExtMetric(src, "cpu.usage.kernel.percent", Gauge, cs.UsageInKernelmodePercentage, dim, cs.Time, true),
 		cs.NewExtMetric(src, "cpu.usage.user.percent", Gauge, cs.UsageInUsermodePercentage, dim, cs.Time, true),
@@ -76,15 +64,24 @@ func totalUsage(stats *dc.Stats) float64 {
 	return calculateLoad(stats.CPUStats.CPUUsage.TotalUsage - stats.PreCPUStats.CPUUsage.TotalUsage)
 }
 
-func usageInKernelmode(stats *dc.Stats) float64 {
+func usageInKernelmode(stats *dc.Stats) (val float64) {
+	if stats.PreCPUStats.CPUUsage.UsageInKernelmode == 0 {
+		return
+	}
 	return calculateLoad(stats.CPUStats.CPUUsage.UsageInKernelmode - stats.PreCPUStats.CPUUsage.UsageInKernelmode)
 }
 
-func usageInUsermode(stats *dc.Stats) float64 {
+func usageInUsermode(stats *dc.Stats) (val float64) {
+	if stats.PreCPUStats.CPUUsage.UsageInUsermode == 0 {
+		return
+	}
 	return calculateLoad(stats.CPUStats.CPUUsage.UsageInUsermode - stats.PreCPUStats.CPUUsage.UsageInUsermode)
 }
 
-func systemUsage(stats *dc.Stats) float64 {
+func systemUsage(stats *dc.Stats) (val float64) {
+	if stats.PreCPUStats.SystemCPUUsage == 0 {
+		return
+	}
 	return calculateLoad(stats.CPUStats.SystemCPUUsage - stats.PreCPUStats.SystemCPUUsage)
 }
 

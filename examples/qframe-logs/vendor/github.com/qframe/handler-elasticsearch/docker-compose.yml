@@ -1,0 +1,18 @@
+version: '3'
+services:
+  elasticsearch:
+    image: qnib/plain-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_HEAP_MAX: "512m"
+      ES_HEAP_MIN: "512m"
+      ES_NODE_MASTER: "true"
+      ES_NODE_DATA: "true"
+  kibana:
+    image: qnib/plain-kibana5
+    ports:
+      - "5601:5601"
+    environment:
+        ES_MASTER_HOST: tasks.elasticsearch

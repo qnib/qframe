@@ -145,6 +145,13 @@ func (m *Metric) GetDimensionValue(dimension string) (value string, ok bool) {
 	return
 }
 
+func (m *Metric) GetDimensionString() string {
+	res := []string{}
+	for k,v := range m.Dimensions {
+		res = append(res, fmt.Sprintf("%s=%s", k,v))
+	}
+	return strings.Join(res, ",")
+}
 // AddToAll adds a map of dimensions to a list of metrics
 func AddToAll(metrics *[]Metric, dims map[string]string) {
 	for _, m := range *metrics {
@@ -195,4 +202,8 @@ func (m *Metric) IsFiltered(f Filter) bool {
 	}
 
 	return true
+}
+
+func (m *Metric) ToOpenTSDB() string {
+	return fmt.Sprintf("%s %d %f %s", m.Name, m.Time.Unix(), m.Value, m.GetDimensionString())
 }

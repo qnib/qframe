@@ -2,8 +2,6 @@ package qtypes
 
 
 import (
-	"fmt"
-	"strings"
 	"github.com/docker/docker/api/types"
 )
 
@@ -58,18 +56,7 @@ func NewNetStats(base Base, cnt *types.Container) NetStats {
 
 
 func (ns *NetStats) ToMetrics(src string) []Metric {
-	dim := map[string]string{
-		"container_id": ns.Container.ID,
-		"container_name": strings.Trim(ns.Container.Names[0], "/"),
-		"image_name": ns.Container.Image,
-		"command": strings.Replace(ns.Container.Command, " ", "#", -1),
-		"created": fmt.Sprintf("%d", ns.Container.Created),
-	}
-	for k, v := range ns.Container.Labels {
-		dv := strings.Replace(v, " ", "#", -1)
-		dv = strings.Replace(v, ".", "_", -1)
-		dim[k] = dv
-	}
+	dim := AssembleDefaultDimensions(ns.Container)
 	iface := "global"
 	if ns.NameInterface != "" {
 		iface = ns.NameInterface
