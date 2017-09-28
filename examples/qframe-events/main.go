@@ -1,20 +1,20 @@
 package main
 
 import (
-	"github.com/codegangsta/cli"
-	"github.com/zpatrick/go-config"
-	"log"
-	"os"
-	"sync"
+"github.com/codegangsta/cli"
+"github.com/zpatrick/go-config"
+"log"
+"os"
+"sync"
 
-	"github.com/qnib/qframe-collector-docker-events/lib"
-	"github.com/qnib/qframe-collector-internal/lib"
-	"github.com/qnib/qframe-collector-tcp/lib"
-	"github.com/qnib/qframe-filter-grok/lib"
-	"github.com/qnib/qframe-filter-inventory/lib"
-	"github.com/qnib/qframe-handler-elasticsearch/lib"
-	"github.com/qnib/qframe-handler-influxdb/lib"
-	"github.com/qnib/qframe-types"
+"github.com/qnib/qframe-collector-docker-events/lib"
+"github.com/qnib/qframe-collector-internal/lib"
+"github.com/qnib/qframe-collector-tcp/lib"
+"github.com/qnib/qframe-filter-grok/lib"
+"github.com/qnib/qframe-filter-inventory/lib"
+"github.com/qnib/qframe-handler-elasticsearch/lib"
+"github.com/qnib/qframe-handler-influxdb/lib"
+"github.com/qnib/qframe-types"
 )
 
 const (

@@ -9,7 +9,6 @@ import (
 
 
 	"github.com/qframe/handler-influxdb"
-	"github.com/qnib/qframe-types"
 	"github.com/qframe/collector-internal"
 	"github.com/qframe/collector-docker-events"
 	"github.com/qframe/collector-docker-stats"
