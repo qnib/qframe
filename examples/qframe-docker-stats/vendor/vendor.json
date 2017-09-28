@@ -15,10 +15,16 @@
 			"revisionTime": "2017-08-15T20:20:55Z"
 		},
 		{
-			"checksumSHA1": "spyv5/YFBjYyZLZa1U2LBfDR8PM=",
-			"path": "github.com/beorn7/perks/quantile",
-			"revision": "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9",
-			"revisionTime": "2016-08-04T10:47:26Z"
+			"checksumSHA1": "v//paEicsK6ZcOAwQm/DGDBZDpE=",
+			"path": "github.com/qframe/collector-docker-events",
+			"revision": "ca10b042e0b9263b033f2d6452dc06eb6d605516",
+			"revisionTime": "2017-07-20T07:47:08Z"
+		},
+		{
+			"checksumSHA1": "gn57AA15dCsSuvKAp7d6O1j6J4Q=",
+			"path": "github.com/qframe/filter-grok",
+			"revision": "85ad7827b30b2b2918159e21683798fa65f1e0e5",
+			"revisionTime": "2017-07-12T07:22:17Z"
 		},
 		{
 			"checksumSHA1": "Mu77HNTb0SVN0IEBB+hSDeZzO+g=",
