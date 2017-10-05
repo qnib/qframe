@@ -112,12 +112,12 @@ func (p *Plugin) ToPayload(e interface{}) (payloads []Payload, err error) {
 		switch ce.Event.Action {
 		case "start","create":
 			// In case the container starts, the information about the start is passed
-			payloads = append(payloads, Payload{Topic: "cnt_details", Data: ce.ContainerToFlatJSON()})
+			payloads = append(payloads, Payload{Topic: "cnt_details", Data: ce.ContainerToJSON()})
 		case "exec_create":
 			return
 		}
 		// Add normal DockerEvent
-		payloads = append(payloads, Payload{Topic: "cnt_event", Data: ce.EventToJSON()})
+		payloads = append(payloads, Payload{Topic: "cnt_event", Data: ce.EventToFlatJSON()})
 	case qtypes_docker_events.ServiceEvent:
 		se := e.(qtypes_docker_events.ServiceEvent)
 		switch se.Event.Action {

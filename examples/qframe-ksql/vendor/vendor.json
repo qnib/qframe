@@ -394,12 +394,6 @@
 			"revisionTime": "2017-07-09T22:27:04Z"
 		},
 		{
-			"checksumSHA1": "b8F628srIitj5p7Y130xc9k0QWs=",
-			"path": "github.com/hashicorp/go-cleanhttp",
-			"revision": "3573b8b52aa7b37b9358d966a898feb387f62437",
-			"revisionTime": "2017-02-11T01:34:15Z"
-		},
-		{
 			"path": "github.com/influxdata/influxdb/client/v2",
 			"revision": "9e0e62323a8c51029bed1d7aa42a22df5a9e8d86",
 			"revisionTime": "2017-08-11T16:48:31Z"
@@ -457,13 +451,7 @@
 			"revisionTime": "2017-09-18T08:04:46Z"
 		},
 		{
-			"checksumSHA1": "TaUumfdk0+2aKxemgk1w78hnO14=",
-			"path": "github.com/qframe/collector-internal",
-			"revision": "47184c54b0190098d038fcebd8f9cc0f733e4bb9",
-			"revisionTime": "2017-07-12T09:22:08Z"
-		},
-		{
-			"checksumSHA1": "LHrCEuYJ1uTbb5i1oEea+67Hr2M=",
+			"checksumSHA1": "mVSV5IKG/uOmavSHESX115dzzz0=",
 			"path": "github.com/qframe/handler-kafka",
 			"revision": "abeba4d3ecc700ef5d9e8a7b3afb94a81d6a5dc2",
 			"revisionTime": "2017-09-05T14:22:09Z"

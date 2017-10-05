@@ -14,7 +14,7 @@ RUN apt-get -qq update \
 WORKDIR /usr/local/src/github.com/qnib/qframe/examples/qframe-ksql
 COPY main.go ./
 COPY vendor ./vendor
-RUN go build
+RUN go install
 
 FROM qnib/uplain-init
 
@@ -33,9 +33,8 @@ ENV ENTRYPOINTS_DIR=/opt/qframe/entry/ \
     KAFKA_BROKER_PORT=9092 \
     HEALTH_BIND_PORT=8123 \
     HEALTH_BIND_HOST=0.0.0.0
-COPY --from=build \
-     /usr/local/src/github.com/qnib/qframe/examples/qframe-ksql/qframe-ksql \
-     /usr/local/bin/
+
+COPY --from=0 /usr/local/bin/qframe-ksql /usr/local/bin/
 COPY resources/opt/qnib/qframe/template.yml /opt/qnib/qframe/template.yml
 COPY resources/opt/qframe/entry/*.sh /opt/qframe/entry/
 CMD ["qframe-ksql", "--config", "/etc/qframe.yml"]
