@@ -1,0 +1,18 @@
+zookeeper:
+    image: qnib/plain-zookeeper
+    net: "host"
+    ports:
+      - "2181:2181"
+broker:
+    image: qnib/plain-kafka
+    net: "host"
+    ports:
+      - "9092:9092"
+    extra_hosts:
+      - "moby:127.0.0.1"
+    environment:
+      ZK_SERVERS: "moby"
+kafkacat:
+    image: qnib/plain-kafkacat
+    command: wait.sh
+

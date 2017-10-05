@@ -1,0 +1,19 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE `dashboard_tag` (
+`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+, `dashboard_id` INTEGER NOT NULL
+, `term` TEXT NOT NULL
+);
+CREATE TABLE `dashboard` (
+`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+, `version` INTEGER NOT NULL
+, `slug` TEXT NOT NULL
+, `title` TEXT NOT NULL
+, `data` TEXT NOT NULL
+, `org_id` INTEGER NOT NULL
+, `created` DATETIME NOT NULL
+, `updated` DATETIME NOT NULL
+, `updated_by` INTEGER NULL, `created_by` INTEGER NULL, `gnet_id` INTEGER NULL, `plugin_id` TEXT NULL);
+
+COMMIT;

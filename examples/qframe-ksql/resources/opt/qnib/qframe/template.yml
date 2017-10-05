@@ -1,0 +1,23 @@
+---
+log:
+  level: "LOG_LEVEL"
+  #only-plugins: "LOG_ONLY_PLUGINS"
+
+collector:
+  docker-events:
+    docker-host: "DOCKER_HOST"
+
+cache:
+  health:
+    # Health endpoints expects logs and stats subscribers, this ignores the latter
+    ignore-stats: "true"
+    bind-host: "HEALTH_BIND_HOST"
+    bind-port: "HEALTH_BIND_PORT"
+
+
+handler:
+  kafka:
+    inputs: "docker-events"
+    broker:
+      hosts: "KAFKA_BROKER_HOSTS"
+      port: "KAFKA_BROKER_PORT"
