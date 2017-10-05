@@ -6,12 +6,14 @@ import (
 	"github.com/docker/docker/api/types/events"
 	"fmt"
 	"github.com/qframe/types/helper"
+	"github.com/docker/docker/api/types"
 )
 
 type DockerEvent struct {
 	qtypes_messages.Base
 	Message   	string
 	Event 		events.Message
+	Engine 		types.Info
 }
 
 func NewDockerEvent(base qtypes_messages.Base, event events.Message) DockerEvent {
@@ -22,11 +24,32 @@ func NewDockerEvent(base qtypes_messages.Base, event events.Message) DockerEvent
 	}
 }
 
+func (de *DockerEvent) SetEngineInfo(e types.Info) {
+	de.Engine = e
+}
+
 func (de *DockerEvent) EventToJSON() (res map[string]interface{}) {
 	res = de.Base.ToJSON()
 	res["message"] = de.Message
 	res["event"] = de.Event
 	return
+}
+
+
+func (de *DockerEvent) AddEngineFlatJSON(res map[string]interface{}) map[string]interface{} {
+	res["engine_id"] = de.Engine.ID
+	res["engine_name"] = de.Engine.Name
+	eLab, err := qtypes_helper.PrefixFlatLabels(de.Engine.Labels, res, "engine_label")
+	if err == nil {
+		res = eLab
+	}
+	res["engine_arch"] = de.Engine.Architecture
+	res["engine_kernel"] = de.Engine.KernelVersion
+	res["engine_os"] = de.Engine.OperatingSystem
+	res["swarm_node_address"] = de.Engine.Swarm.NodeAddr
+	res["swarm_node_id"] = de.Engine.Swarm.NodeID
+	res["swarm_cluster_id"] = de.Engine.Swarm.Cluster.ID
+	return res
 }
 
 func (de *DockerEvent) EventToFlatJSON() (res map[string]interface{}) {

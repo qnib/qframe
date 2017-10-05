@@ -57,6 +57,28 @@ func PrefixFlatKV(kv  map[string]string, out map[string]interface{}, prefix stri
 	return res,nil
 }
 
+// PrefixFlatLabels takes a key/value slice (separated by =) and merges each key into an existing map using a prefix.
+func PrefixFlatLabels(s []string, out map[string]interface{}, prefix string) (res map[string]interface{},err error) {
+	res = map[string]interface{}{}
+	for k,v := range out {
+		res[k] = v
+	}
+	forbiddenStr := []string{","," "}
+	for _, ele := range s {
+		kv := strings.Split(ele, "=")
+		if len(kv) != 2 {
+			continue
+		}
+		if ContainersOneOf(kv[0], forbiddenStr) {
+			return res, fmt.Errorf("key containers one if '%s'", strings.Join(forbiddenStr, "','"))
+		}
+		res[fmt.Sprintf("%s_%s", prefix, kv[0])] = kv[1]
+	}
+	return res, nil
+}
+
+
+
 
 func FlattenKV(kv map[string]string) (res string, err error) {
 	r := []string{}

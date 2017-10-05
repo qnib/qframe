@@ -27,6 +27,7 @@ func (ce *ContainerEvent) GetContainerName() string {
 	}
 }
 
+// ContainerToJSON create a nested JSON object.
 func (ce *ContainerEvent) ContainerToJSON() (map[string]interface{}) {
 	res := ce.Base.ToJSON()
 	res["msg_message"] = ce.Message
@@ -34,10 +35,12 @@ func (ce *ContainerEvent) ContainerToJSON() (map[string]interface{}) {
 	return res
 }
 
-func (ce *ContainerEvent) ContainerToFlatJSON() (map[string]interface{}) {
-	res := ce.Base.ToFlatJSON()
+// ContainerToFlatJSON create a key/val JSON map, which can be consumed by KSQL.
+func (ce *ContainerEvent) ContainerToFlatJSON() (res map[string]interface{}) {
+	res = ce.Base.ToFlatJSON()
 	res["msg_message"] = ce.Message
-	res["node_id"] = ce.Container.Node.Name
+	// TODO: Use pointer instead of reasigning it?
+	res = ce.AddEngineFlatJSON(res)
 	res["container_id"] = ce.Container.ID
 	res["container_image"] = ce.Container.Image
 	res["container_name"] = ce.GetContainerName()

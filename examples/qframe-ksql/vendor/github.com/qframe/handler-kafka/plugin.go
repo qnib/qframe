@@ -112,7 +112,7 @@ func (p *Plugin) ToPayload(e interface{}) (payloads []Payload, err error) {
 		switch ce.Event.Action {
 		case "start","create":
 			// In case the container starts, the information about the start is passed
-			payloads = append(payloads, Payload{Topic: "cnt_details", Data: ce.ContainerToJSON()})
+			payloads = append(payloads, Payload{Topic: "cnt_details", Data: ce.ContainerToFlatJSON()})
 		case "exec_create":
 			return
 		}

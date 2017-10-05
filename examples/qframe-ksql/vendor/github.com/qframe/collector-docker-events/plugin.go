@@ -75,6 +75,7 @@ func (p *Plugin) Run() {
 			Action: "start",
 		}
 		de := qtypes_docker_events.NewDockerEvent(base, newEvent)
+		de.SetEngineInfo(p.info)
 		p.Log("trace", fmt.Sprintf("Already running container %s: SetItem(%s)", cJson.Name, cJson.ID))
 		p.inventory.Store(cnt.ID, cJson)
 		ce := qtypes_docker_events.NewContainerEvent(de, cJson)
