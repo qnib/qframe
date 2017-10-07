@@ -39,8 +39,7 @@ func (ce *ContainerEvent) ContainerToJSON() (map[string]interface{}) {
 func (ce *ContainerEvent) ContainerToFlatJSON() (res map[string]interface{}) {
 	res = ce.Base.ToFlatJSON()
 	res["msg_message"] = ce.Message
-	// TODO: Use pointer instead of reasigning it?
-	res = ce.AddEngineFlatJSON(res)
+	res["engine_id"] = ce.Engine.ID
 	res["container_id"] = ce.Container.ID
 	res["container_image"] = ce.Container.Image
 	res["container_name"] = ce.GetContainerName()

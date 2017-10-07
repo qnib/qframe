@@ -11,16 +11,16 @@ import (
 	"time"
 	"github.com/qframe/types/messages"
 	"github.com/qframe/types/docker-events"
-	"github.com/docker/docker/api/types/swarm"
 	"github.com/qframe/types/constants"
 	"github.com/qframe/types/qchannel"
 	"github.com/qframe/types/plugin"
 	"sync"
 	"github.com/docker/docker/api/types/events"
+	"github.com/docker/docker/api/types/swarm"
 )
 
 const (
-	version   = "0.3.0"
+	version   = "0.3.1"
 	pluginTyp = qtypes_constants.COLLECTOR
 	pluginPkg = "docker-events"
 	dockerAPI = "v1.29"
@@ -74,8 +74,7 @@ func (p *Plugin) Run() {
 			Type: "container",
 			Action: "start",
 		}
-		de := qtypes_docker_events.NewDockerEvent(base, newEvent)
-		de.SetEngineInfo(p.info)
+		de := qtypes_docker_events.NewDockerEvent(base, p.info, newEvent)
 		p.Log("trace", fmt.Sprintf("Already running container %s: SetItem(%s)", cJson.Name, cJson.ID))
 		p.inventory.Store(cnt.ID, cJson)
 		ce := qtypes_docker_events.NewContainerEvent(de, cJson)
@@ -98,7 +97,7 @@ func (p *Plugin) Run() {
 					dMsg.Action = exec[0]
 					dMsg.Actor.Attributes["status"] = exec[1]
 				}
-				de := qtypes_docker_events.NewDockerEvent(base, dMsg)
+				de := qtypes_docker_events.NewDockerEvent(base, p.info, dMsg)
 				cntVal, ok := p.inventory.Load(dMsg.Actor.ID)
 				if !ok {
 					skipAction := false
@@ -145,9 +144,17 @@ func (p *Plugin) Run() {
 				p.QChan.Data.Send(ce)
 				continue
 			case "service":
-				de := qtypes_docker_events.NewDockerEvent(base, dMsg)
+				de := qtypes_docker_events.NewDockerEvent(base, p.info, dMsg)
 				switch dMsg.Action {
-				case "create","update","remove":
+				case "create","update":
+					srv, _, err := engineCli.ServiceInspectWithRaw(ctx, dMsg.Actor.ID, types.ServiceInspectOptions{})
+					if err != nil {
+						p.Log("error", fmt.Sprintf("Failed to inspect service '%s': %s", dMsg.Actor.ID, err.Error()))
+						continue
+					}
+					se := qtypes_docker_events.NewServiceEvent(de, srv)
+					p.QChan.Data.Send(se)
+				case "remove":
 					srv := swarm.Service{ID: dMsg.Actor.ID}
 					se := qtypes_docker_events.NewServiceEvent(de, srv)
 					p.QChan.Data.Send(se)

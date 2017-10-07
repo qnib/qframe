@@ -445,76 +445,76 @@
 			"revisionTime": "2017-05-05T04:36:39Z"
 		},
 		{
-			"checksumSHA1": "CIXD44L59qaCmK17Js5FrZx+sQQ=",
+			"checksumSHA1": "61M900ev4ILWiX9+aNXCvTs5M9U=",
 			"path": "github.com/qframe/collector-docker-events",
-			"revision": "e9e1179f0762def380afa975c0c67c2dccd0075b",
-			"revisionTime": "2017-09-18T08:04:46Z"
+			"revision": "2fe0c644d6aec76fed298da66999f23e2357e006",
+			"revisionTime": "2017-10-07T12:42:31Z"
 		},
 		{
-			"checksumSHA1": "71ZjlgowbHhSPg8uex77dPCB3DU=",
+			"checksumSHA1": "R5nrCIcePIV61aKskaC7RFsRPXA=",
 			"path": "github.com/qframe/handler-kafka",
-			"revision": "abeba4d3ecc700ef5d9e8a7b3afb94a81d6a5dc2",
-			"revisionTime": "2017-09-05T14:22:09Z"
+			"revision": "9b622ec8079b52061e2be4d9fadbe5c436191ab1",
+			"revisionTime": "2017-10-07T12:41:29Z"
 		},
 		{
 			"checksumSHA1": "ZokxRO/FavchTs9BrbmiCZNrzO4=",
 			"path": "github.com/qframe/types/constants",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "1bYhfK64PMCq1kdgHv5sj1c6lYA=",
 			"path": "github.com/qframe/types/container/stats",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
-			"checksumSHA1": "RjXgQv4x+sTeMFcI33Vx16gdywA=",
+			"checksumSHA1": "pH/6NQn2nuVzHCysLu4wEH6zCw8=",
 			"path": "github.com/qframe/types/docker-events",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "eui+Vpf5HPkJOo7Tq/femYY+DEU=",
 			"path": "github.com/qframe/types/helper",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
-			"checksumSHA1": "ZZi3CWuaV9osmKpAIaJwWj4uS6Y=",
+			"checksumSHA1": "LNs7ijDX5Vg6cp1U9Zaud0GW4DM=",
 			"path": "github.com/qframe/types/messages",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "NLw8NMX4Cj04OGLdD7iktgiNi/I=",
 			"path": "github.com/qframe/types/metrics",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
-			"checksumSHA1": "TegZuzgQuJzeyuMEEL7oSntDp2A=",
+			"checksumSHA1": "u26L1++2rh5wNBbB8F+p8q2tCiQ=",
 			"path": "github.com/qframe/types/plugin",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "bI9DmB1P2XfVkog5EvRu01AZ4Uc=",
 			"path": "github.com/qframe/types/qchannel",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "tjAWeTWbGnQle1FFOHnGquI7Hc8=",
 			"path": "github.com/qframe/types/syslog",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "aWT8tf2NLTwFLrrTSEZCraccjMI=",
 			"path": "github.com/qframe/types/ticker",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
+			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
 			"checksumSHA1": "0Xj4ELvinVxZNzoeXV+adY5Ea9c=",

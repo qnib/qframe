@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	version = "0.1.0"
+	version = "0.1.1"
 	pluginTyp = qtypes.HANDLER
 	pluginPkg = "kafka"
 )
@@ -123,12 +123,11 @@ func (p *Plugin) ToPayload(e interface{}) (payloads []Payload, err error) {
 		switch se.Event.Action {
 		case "create":
 			// In case the container starts, the information about the start is passed
-			payloads = append(payloads, Payload{Topic: "srv_details", Data: se.ServiceToJSON()})
+			payloads = append(payloads, Payload{Topic: "srv_details", Data: se.ServiceToFlatJSON()})
 		case "exec_create":
 			return
 		}
-		payloads = append(payloads, Payload{Topic: "srv_event", Data: se.EventToJSON()})
-
+		payloads = append(payloads, Payload{Topic: "srv_event", Data: se.ServiceEventToFlatJSON()})
 	default:
 		p.Log("info", fmt.Sprintf("Skip sending to kafka: %s", reflect.TypeOf(e)))
 

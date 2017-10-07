@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	version = "0.1.8"
+	version = "0.1.9"
 )
 
 type Base struct {
@@ -74,6 +74,7 @@ func (b *Base) ToJSON() map[string]interface{} {
 	res["source_path"] = b.SourcePath
 	res["source_success"] = b.SourceSuccess
 	res["tags"] = b.Tags
+	res["msg"] = b.Msg
 	return res
 }
 
@@ -87,9 +88,9 @@ func (b *Base) ToFlatJSON() map[string]interface{} {
 	res["msg_source_id"] = fmt.Sprintf("%d", b.SourceID)
 	res["msg_source_path"] = strings.Join(b.SourcePath, "-")
 	res["msg_source_success"] = fmt.Sprintf("%v", b.SourceSuccess)
-	msgTags, err := qtypes_helper.FlattenKV(b.Tags)
+	rTags, err := qtypes_helper.PrefixFlatKV(b.Tags, res, "msg_tag")
 	if err == nil {
-		res["msg_tags"] = msgTags
+		res = rTags
 	}
 	return res
 }
