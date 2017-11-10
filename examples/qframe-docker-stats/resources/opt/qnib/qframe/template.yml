@@ -1,0 +1,50 @@
+---
+log:
+  level: "LOG_LEVEL"
+  #only-plugins: "LOG_ONLY_PLUGINS"
+
+collector:
+  docker-events:
+    docker-host: "DOCKER_HOST"
+  docker-log:
+    docker-host: "DOCKER_HOST"
+    inputs: "docker-events"
+    # Env var which enables capturing in case it is set to true
+    enable-log-env: "LOG_CAPTURE_ENABLED"
+    # If true only ingest the last minute (tail-logs-since) of logs, instead of everything
+    disable-reparse-logs: "false"
+    # When above is true, this hits
+    tail-logs-since: "DOCKER_LOG_SINCE"
+
+cache:
+  health:
+    # Health endpoints expects logs and stats subscribers, this ignores the latter
+    ignore-stats: "true"
+    bind-host: "HEALTH_BIND_HOST"
+    bind-port: "HEALTH_BIND_PORT"
+
+filter:
+  app-log:
+    pattern-dir: "GROK_PATTERNS_DIR"
+    inputs: "docker-log"
+    pattern: "%{LOG}"
+    overwrite-message-key: "msg"
+
+handler:
+  es_logstash:
+    host: "ELASTICSEARCH_HOST"
+    inputs: "app-log"
+    # By default message Tags are put into into the tag field as they come in.
+    # This will remap them to become a root field in Elasticsearch
+    # prefixed with the name of the plugin: therefore outdated in this particular case
+    kv-to-field: "docker-log.log_level:Level,docker-log.log_msg:msg"
+    # comma separated list of Tags to skip.
+    # prefixed with the name of the plugin: therefore outdated in this particular case
+    kv-skip: "docker-log.LOG"
+  influxdb:
+    database: "qframe"
+    host: "INFLUXDB_HOST"
+    inputs: "internal,container-stats"
+    pattern: "%{INT:number}"
+    ticker-msec: "2000"
+    batch-size: "500"
