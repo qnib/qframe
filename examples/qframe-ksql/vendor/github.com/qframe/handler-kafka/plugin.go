@@ -10,7 +10,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 
 	"github.com/qnib/qframe-types"
-	"github.com/qframe/types/docker-events"
+	"github.com/qframe/types/docker"
 	"strings"
 	"github.com/qframe/types/plugin"
 	"github.com/qframe/types/metrics"
@@ -85,12 +85,12 @@ func (p *Plugin) Run() {
 					continue
 				}*/
 				p.PushToKafka(m)
-			case qtypes_docker_events.ServiceEvent:
-				se := val.(qtypes_docker_events.ServiceEvent)
+			case qtypes_docker.ServiceEvent:
+				se := val.(qtypes_docker.ServiceEvent)
 				//se.StopProcessing(p.Plugin, false)
 				p.PushToKafka(se)
-			case qtypes_docker_events.ContainerEvent:
-				ce := val.(qtypes_docker_events.ContainerEvent)
+			case qtypes_docker.ContainerEvent:
+				ce := val.(qtypes_docker.ContainerEvent)
 				//ce.StopProcessing(p.Plugin, false)
 				p.PushToKafka(ce)
 			}
@@ -107,8 +107,17 @@ type Payload struct {
 // The Payload is placed in a map, in which the key defines the topic to push the payload to.
 func (p *Plugin) ToPayload(e interface{}) (payloads []Payload, err error) {
 	switch e.(type) {
-	case qtypes_docker_events.ContainerEvent:
-		ce := e.(qtypes_docker_events.ContainerEvent)
+	case qtypes_docker.ConfigEvent:
+		ce := e.(qtypes_docker.ConfigEvent)
+		switch ce.Event.Action {
+		case "start","create":
+			payloads = append(payloads, Payload{Topic: "config_details", Data: ce.ToFlatJSON()})
+		case "exec_create":
+			return
+		}
+		payloads = append(payloads, Payload{Topic: "config_event", Data: ce.EventToFlatJSON()})
+	case qtypes_docker.ContainerEvent:
+		ce := e.(qtypes_docker.ContainerEvent)
 		switch ce.Event.Action {
 		case "start","create":
 			// In case the container starts, the information about the start is passed
@@ -118,11 +127,10 @@ func (p *Plugin) ToPayload(e interface{}) (payloads []Payload, err error) {
 		}
 		// Add normal DockerEvent
 		payloads = append(payloads, Payload{Topic: "cnt_event", Data: ce.EventToFlatJSON()})
-	case qtypes_docker_events.ServiceEvent:
-		se := e.(qtypes_docker_events.ServiceEvent)
+	case qtypes_docker.ServiceEvent:
+		se := e.(qtypes_docker.ServiceEvent)
 		switch se.Event.Action {
 		case "create":
-			// In case the container starts, the information about the start is passed
 			payloads = append(payloads, Payload{Topic: "srv_details", Data: se.ServiceToFlatJSON()})
 		case "exec_create":
 			return

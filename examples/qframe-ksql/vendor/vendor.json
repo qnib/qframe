@@ -445,13 +445,13 @@
 			"revisionTime": "2017-05-05T04:36:39Z"
 		},
 		{
-			"checksumSHA1": "61M900ev4ILWiX9+aNXCvTs5M9U=",
+			"checksumSHA1": "0+yGQRCzifeA5XZ1Is1bWo2hc1c=",
 			"path": "github.com/qframe/collector-docker-events",
 			"revision": "2fe0c644d6aec76fed298da66999f23e2357e006",
 			"revisionTime": "2017-10-07T12:42:31Z"
 		},
 		{
-			"checksumSHA1": "R5nrCIcePIV61aKskaC7RFsRPXA=",
+			"checksumSHA1": "dEYrPiEtsV43PKvQBUHLyq6jeoM=",
 			"path": "github.com/qframe/handler-kafka",
 			"revision": "9b622ec8079b52061e2be4d9fadbe5c436191ab1",
 			"revisionTime": "2017-10-07T12:41:29Z"
@@ -469,8 +469,8 @@
 			"revisionTime": "2017-10-07T12:43:20Z"
 		},
 		{
-			"checksumSHA1": "pH/6NQn2nuVzHCysLu4wEH6zCw8=",
-			"path": "github.com/qframe/types/docker-events",
+			"checksumSHA1": "IjKLsYiFLJ2zVLQZolt7JlP5zHI=",
+			"path": "github.com/qframe/types/docker",
 			"revision": "f97b0a0d3a50e085208d0db86be239ead2e9b88a",
 			"revisionTime": "2017-10-07T12:43:20Z"
 		},

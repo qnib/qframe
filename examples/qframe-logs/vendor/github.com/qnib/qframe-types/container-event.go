@@ -11,13 +11,15 @@ type ContainerEvent struct {
 	Message   	string
 	Container 	types.ContainerJSON
 	Event 		events.Message
+	EngineInfo  types.Info
 }
 
-func NewContainerEvent(base Base, cnt types.ContainerJSON, event events.Message) ContainerEvent {
+func NewContainerEvent(base Base, cnt types.ContainerJSON, event events.Message, info types.Info) ContainerEvent {
 	return ContainerEvent{
 		Base: base,
 		Container: cnt,
 		Event: event,
+		EngineInfo: info,
 	}
 }
 

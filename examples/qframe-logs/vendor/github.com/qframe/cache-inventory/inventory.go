@@ -23,10 +23,10 @@ func NewInventory() Inventory {
 	}
 }
 
-func (i *Inventory) SetItem(key string, item *types.ContainerJSON, info types.Info, ips []string) (err error) {
+func (i *Inventory) SetItem(key string, item *types.ContainerJSON, ips []string) (err error) {
 	i.mux.Lock()
 	defer i.mux.Unlock()
-	resp := NewOKResponse(item, &info, ips)
+	resp := NewOKResponse(item, ips)
 	i.Data[key] = resp
 	return
 }
@@ -56,7 +56,7 @@ func (i *Inventory) HandleRequest(req ContainerRequest) (err error) {
 	for _, resp := range i.Data {
 		res, err := filterItem(req, resp)
 		if err == nil {
-			req.Back <- NewOKResponse(res.Container, resp.Engine, resp.Ips)
+			req.Back <- NewOKResponse(res.Container, resp.Ips)
 			return err
 		} else if req.TimedOut() {
 			err = errors.New(fmt.Sprintf("Timed out after %s", req.Timeout.String()))

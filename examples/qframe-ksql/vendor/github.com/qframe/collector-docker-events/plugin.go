@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 	"github.com/qframe/types/messages"
-	"github.com/qframe/types/docker-events"
+	"github.com/qframe/types/docker"
 	"github.com/qframe/types/constants"
 	"github.com/qframe/types/qchannel"
 	"github.com/qframe/types/plugin"
@@ -74,10 +74,10 @@ func (p *Plugin) Run() {
 			Type: "container",
 			Action: "start",
 		}
-		de := qtypes_docker_events.NewDockerEvent(base, p.info, newEvent)
+		de := qtypes_docker.NewDockerEvent(base, p.info, newEvent)
 		p.Log("trace", fmt.Sprintf("Already running container %s: SetItem(%s)", cJson.Name, cJson.ID))
 		p.inventory.Store(cnt.ID, cJson)
-		ce := qtypes_docker_events.NewContainerEvent(de, cJson)
+		ce := qtypes_docker.NewContainerEvent(de, cJson)
 		p.QChan.SendData(ce)
 	}
 	msgs, errs := engineCli.Events(context.Background(), types.EventsOptions{})
@@ -97,7 +97,7 @@ func (p *Plugin) Run() {
 					dMsg.Action = exec[0]
 					dMsg.Actor.Attributes["status"] = exec[1]
 				}
-				de := qtypes_docker_events.NewDockerEvent(base, p.info, dMsg)
+				de := qtypes_docker.NewDockerEvent(base, p.info, dMsg)
 				cntVal, ok := p.inventory.Load(dMsg.Actor.ID)
 				if !ok {
 					skipAction := false
@@ -122,7 +122,7 @@ func (p *Plugin) Run() {
 							continue
 						}
 						p.inventory.Store(dMsg.Actor.ID, cnt)
-						ce := qtypes_docker_events.NewContainerEvent(de, cnt)
+						ce := qtypes_docker.NewContainerEvent(de, cnt)
 						ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
 						p.Log("trace", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 						p.QChan.Data.Send(ce)
@@ -138,13 +138,13 @@ func (p *Plugin) Run() {
 					continue
 				}
 				cnt := cntVal.(types.ContainerJSON)
-				ce := qtypes_docker_events.NewContainerEvent(de, cnt)
+				ce := qtypes_docker.NewContainerEvent(de, cnt)
 				ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
 				p.Log("trace", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 				p.QChan.Data.Send(ce)
 				continue
 			case "service":
-				de := qtypes_docker_events.NewDockerEvent(base, p.info, dMsg)
+				de := qtypes_docker.NewDockerEvent(base, p.info, dMsg)
 				switch dMsg.Action {
 				case "create","update":
 					srv, _, err := engineCli.ServiceInspectWithRaw(ctx, dMsg.Actor.ID, types.ServiceInspectOptions{})
@@ -152,11 +152,27 @@ func (p *Plugin) Run() {
 						p.Log("error", fmt.Sprintf("Failed to inspect service '%s': %s", dMsg.Actor.ID, err.Error()))
 						continue
 					}
-					se := qtypes_docker_events.NewServiceEvent(de, srv)
+					se := qtypes_docker.NewServiceEvent(de, srv)
 					p.QChan.Data.Send(se)
 				case "remove":
 					srv := swarm.Service{ID: dMsg.Actor.ID}
-					se := qtypes_docker_events.NewServiceEvent(de, srv)
+					se := qtypes_docker.NewServiceEvent(de, srv)
+					p.QChan.Data.Send(se)
+				}
+			case "config":
+				de := qtypes_docker.NewDockerEvent(base, p.info, dMsg)
+				switch dMsg.Action {
+				case "create","update":
+					cfg, _, err := engineCli.ConfigInspectWithRaw(ctx, dMsg.Actor.ID)
+					if err != nil {
+						p.Log("error", fmt.Sprintf("Failed to inspect config '%s': %s", dMsg.Actor.ID, err.Error()))
+						continue
+					}
+					se := qtypes_docker.NewConfigEvent(de, cfg)
+					p.QChan.Data.Send(se)
+				case "remove":
+					cfg := swarm.Config{ID: dMsg.Actor.ID}
+					se := qtypes_docker.NewConfigEvent(de, cfg)
 					p.QChan.Data.Send(se)
 				}
 			}
