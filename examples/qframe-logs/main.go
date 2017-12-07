@@ -9,10 +9,8 @@ import (
 	
 	"github.com/qframe/handler-elasticsearch"
 	"github.com/qframe/cache-inventory"
-	"github.com/qframe/handler-influxdb"
 	"github.com/qframe/filter-grok"
 	"github.com/qframe/collector-docker-events"
-	"github.com/qframe/collector-internal"
 	"github.com/qframe/collector-docker-logs"
 	"github.com/qframe/types/qchannel"
 )
@@ -44,37 +42,37 @@ func Run(ctx *cli.Context) {
 	qChan := qtypes_qchannel.NewQChan()
 	qChan.Broadcast()
 	// Start InfluxDB handler
-	phi, err := qhandler_influxdb.New(qChan, *cfg, "influxdb")
+	/*phi, err := qhandler_influxdb.New(qChan, *cfg, "influxdb")
 	check_err(phi.Name, err)
-	go phi.Run()
+	go phi.Run()*/
 	// Start Elasticsearch handler
-	phe, err := qhandler_elasticsearch.New(qChan, *cfg, "es_logstash")
+	phe, err := qhandler_elasticsearch.New(qChan, cfg, "es_logstash")
 	check_err(phe.Name, err)
 	go phe.Run()
 	// Inventory
-	pfi, err := qcache_inventory.New(qChan, *cfg, "inventory")
+	pfi, err := qcache_inventory.New(qChan, cfg, "inventory")
 	check_err(pfi.Name, err)
 	go pfi.Run()
 	// App Log filter
-	pfg, err := qfilter_grok.New(qChan, *cfg, "app-log")
+	pfg, err := qfilter_grok.New(qChan, cfg, "app-log")
 	check_err(pfg.Name, err)
 	go pfg.Run()
 	// Elasticsearch Log filter
-	pfgEs, err := qfilter_grok.New(qChan, *cfg, "es-log")
+	pfgEs, err := qfilter_grok.New(qChan, cfg, "es-log")
 	check_err(pfgEs.Name, err)
 	go pfgEs.Run()
 	// start docker-events
-	pe, err := qcollector_docker_events.New(qChan, *cfg, "docker-events")
+	pe, err := qcollector_docker_events.New(qChan, cfg, "docker-events")
 	check_err(pe.Name, err)
 	go pe.Run()
 	// Docker Logs collector
-	pcdl, err := qcollector_docker_logs.New(qChan, *cfg, "docker-log")
+	pcdl, err := qcollector_docker_logs.New(qChan, cfg, "docker-log")
 	check_err(pcdl.Name, err)
 	go pcdl.Run()
 	// Internal metrics collector
-	pci, err := qcollector_internal.New(qChan, *cfg, "internal")
+	/*pci, err := qcollector_internal.New(qChan, cfg, "internal")
 	check_err(pci.Name, err)
-	go pci.Run()
+	go pci.Run()*/
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	wg.Wait()

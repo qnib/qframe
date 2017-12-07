@@ -23,5 +23,5 @@ COPY --from=0 \
      /usr/local/bin/
 COPY resources/opt/qnib/qframe/template.yml /opt/qnib/qframe/template.yml
 COPY resources/patterns /etc/qframe/patterns
-COPY resources/opt/qframe/entry/*.sh /opt/qframe/entry/
+COPY resources/opt/qnib/entry/*.sh /opt/qframe/entry/
 CMD ["qframe-logs", "--config", "/etc/qframe.yml"]
