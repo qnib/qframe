@@ -9,7 +9,6 @@ import (
 	
 	"github.com/qframe/handler-elasticsearch"
 	"github.com/qframe/cache-inventory"
-	"github.com/qframe/filter-grok"
 	"github.com/qframe/collector-docker-events"
 	"github.com/qframe/collector-docker-logs"
 	"github.com/qframe/types/qchannel"
@@ -54,13 +53,13 @@ func Run(ctx *cli.Context) {
 	check_err(pfi.Name, err)
 	go pfi.Run()
 	// App Log filter
-	pfg, err := qfilter_grok.New(qChan, cfg, "app-log")
+	/*pfg, err := qfilter_grok.New(qChan, cfg, "app-log")
 	check_err(pfg.Name, err)
-	go pfg.Run()
+	go pfg.Run()*/
 	// Elasticsearch Log filter
-	pfgEs, err := qfilter_grok.New(qChan, cfg, "es-log")
+	/*pfgEs, err := qfilter_grok.New(qChan, cfg, "es-log")
 	check_err(pfgEs.Name, err)
-	go pfgEs.Run()
+	go pfgEs.Run()*/
 	// start docker-events
 	pe, err := qcollector_docker_events.New(qChan, cfg, "docker-events")
 	check_err(pe.Name, err)

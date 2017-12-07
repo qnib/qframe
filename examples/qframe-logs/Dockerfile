@@ -7,7 +7,7 @@ RUN go build
 
 FROM qnib/uplain-init
 
-ENV ENTRYPOINTS_DIR=/opt/qnib/entry/ \
+ENV ENTRYPOINTS_DIR=/opt/qframe/entry/ \
     LOG_LEVEL=info \
     DOCKER_HOST=unix:///var/run/docker.sock \
     ELASTICSEARCH_HOST=172.17.0.1 \
