@@ -33,7 +33,7 @@ filter:
 handler:
   es_logstash:
     host: "ELASTICSEARCH_HOST"
-    inputs: "app-log"
+    inputs: "docker-log"
     # By default message Tags are put into into the tag field as they come in.
     # This will remap them to become a root field in Elasticsearch
     # prefixed with the name of the plugin: therefore outdated in this particular case
