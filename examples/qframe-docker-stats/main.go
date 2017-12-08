@@ -10,6 +10,8 @@ import (
 
 	"github.com/qframe/handler-influxdb"
 	"github.com/qframe/types/qchannel"
+	"github.com/qframe/cache-inventory"
+	"github.com/qframe/collector-docker-stats"
 )
 
 const (
@@ -53,6 +55,7 @@ func Run(ctx *cli.Context) {
 	pfs, err := qcache_statsq.New(qChan, cfg, "statsq")
 	check_err(pfs.Name, err)
 	go pfs.Run()
+	*/
 	// Container Stats
 	pfcs, err := qcollector_docker_stats.New(qChan, cfg, "container-stats")
 	check_err(pfcs.Name, err)
@@ -61,6 +64,7 @@ func Run(ctx *cli.Context) {
 	pfi, err := qcache_inventory.New(qChan, cfg, "inventory")
 	check_err(pfi.Name, err)
 	go pfi.Run()
+	/*
 	// Metrics
 	pfmet, err := qfilter_metrics.New(qChan, cfg, "metrics")
 	check_err(pfmet.Name, err)
@@ -78,10 +82,7 @@ func Run(ctx *cli.Context) {
 	pct, err := qcollector_tcp.New(qChan, cfg, "tcp")
 	check_err(pct.Name, err)
 	go pct.Run()
-	// start docker-stats
-	pds, err := qcollector_docker_stats.New(qChan, cfg, "docker-stats")
-	check_err(pds.Name, err)
-	go pds.Run()*/
+	*/
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	wg.Wait()

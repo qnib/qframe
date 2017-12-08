@@ -15,18 +15,6 @@
 			"revisionTime": "2017-08-15T20:20:55Z"
 		},
 		{
-			"checksumSHA1": "v//paEicsK6ZcOAwQm/DGDBZDpE=",
-			"path": "github.com/qframe/collector-docker-events",
-			"revision": "ca10b042e0b9263b033f2d6452dc06eb6d605516",
-			"revisionTime": "2017-07-20T07:47:08Z"
-		},
-		{
-			"checksumSHA1": "gn57AA15dCsSuvKAp7d6O1j6J4Q=",
-			"path": "github.com/qframe/filter-grok",
-			"revision": "85ad7827b30b2b2918159e21683798fa65f1e0e5",
-			"revisionTime": "2017-07-12T07:22:17Z"
-		},
-		{
 			"checksumSHA1": "Mu77HNTb0SVN0IEBB+hSDeZzO+g=",
 			"path": "github.com/cloudflare/cfssl/api",
 			"revision": "c369ce1578c380a7c05b01d6e0d0ac51caac0611",
@@ -129,10 +117,14 @@
 			"revisionTime": "2017-08-15T21:35:18Z"
 		},
 		{
-			"checksumSHA1": "DmVjBB1a8uZzckWdWIu7pXWVTUc=",
+			"path": "github.com/deckarep/golang-set",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "HoN/78ovv3/DC+kDKF7IENEc40g=",
 			"path": "github.com/docker/docker/api/types",
-			"revision": "3d843e81d0cabe8d341f24f63d71548bc0ffd376",
-			"revisionTime": "2017-08-16T12:29:06Z"
+			"revision": "97be2a075225945ca7b92d75f85048cfd05a3a71",
+			"revisionTime": "2017-11-10T15:26:42Z"
 		},
 		{
 			"checksumSHA1": "jVJDbe0IcyjoKc2xbohwzQr+FF0=",
@@ -199,6 +191,12 @@
 			"path": "github.com/docker/docker/api/types/versions",
 			"revision": "3d843e81d0cabe8d341f24f63d71548bc0ffd376",
 			"revisionTime": "2017-08-16T12:29:06Z"
+		},
+		{
+			"checksumSHA1": "yeXlQUvoOI9OE0DmBAcL3NBNLF8=",
+			"path": "github.com/docker/docker/client",
+			"revision": "97be2a075225945ca7b92d75f85048cfd05a3a71",
+			"revisionTime": "2017-11-10T15:26:42Z"
 		},
 		{
 			"checksumSHA1": "ULpqIZK5t9vcVWgAkVWo5p7t8Ak=",
@@ -681,6 +679,30 @@
 			"revisionTime": "2017-07-03T10:12:42Z"
 		},
 		{
+			"checksumSHA1": "zB4w2mqApl3ydkKkZZlV1VX0kA8=",
+			"path": "github.com/qframe/cache-inventory",
+			"revision": "58a3f32ac475e2783dab64c688987b5dbb1d8604",
+			"revisionTime": "2017-09-18T08:38:42Z"
+		},
+		{
+			"checksumSHA1": "v//paEicsK6ZcOAwQm/DGDBZDpE=",
+			"path": "github.com/qframe/collector-docker-events",
+			"revision": "ca10b042e0b9263b033f2d6452dc06eb6d605516",
+			"revisionTime": "2017-07-20T07:47:08Z"
+		},
+		{
+			"checksumSHA1": "uwFhng1C3+5UyWxqhDuWZJoSJYM=",
+			"path": "github.com/qframe/collector-docker-stats",
+			"revision": "ddbe95923f65e6e732bf2fb9e83119f22637ad4b",
+			"revisionTime": "2017-09-19T12:00:05Z"
+		},
+		{
+			"checksumSHA1": "KvlxXu+cFB59OdKt7b5X5wdcHWU=",
+			"path": "github.com/qframe/filter-grok",
+			"revision": "8f86a705bc3d386819b82a24249988eca827d46f",
+			"revisionTime": "2017-09-18T12:48:46Z"
+		},
+		{
 			"checksumSHA1": "NHzLmI8v0Ko1u1ZqQ+TTwSSGAe0=",
 			"path": "github.com/qframe/handler-influxdb",
 			"revision": "1897ce4098dca761a73a7d1e4ddfe22d10872b5d",
@@ -691,6 +713,12 @@
 			"path": "github.com/qframe/types/constants",
 			"revision": "2758c866567c68edd13e71ee9ff2389885d57d93",
 			"revisionTime": "2017-08-14T20:17:02Z"
+		},
+		{
+			"checksumSHA1": "qTxHjY8oFOfYzlsu582xuqckC50=",
+			"path": "github.com/qframe/types/docker-events",
+			"revision": "d6b4b84df8114f925adc5779a562f94fa272121f",
+			"revisionTime": "2017-09-26T08:43:48Z"
 		},
 		{
 			"checksumSHA1": "IypK2Ok21t3MqgtbokuPmA9ZSBY=",
@@ -733,6 +761,10 @@
 			"path": "github.com/sirupsen/logrus",
 			"revision": "f006c2ac4710855cf0f916dd6b77acf6b048dc6e",
 			"revisionTime": "2017-08-15T20:20:55Z"
+		},
+		{
+			"path": "github.com/vjeantet/grok",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "m8hYD/alsufIYIM7sR06wbL+dKo=",
