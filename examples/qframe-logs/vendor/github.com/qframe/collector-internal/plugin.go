@@ -6,9 +6,10 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	"github.com/qnib/qframe-types"
-
 	"fmt"
+	"github.com/qframe/types/qchannel"
+	"github.com/qframe/types/plugin"
+	"github.com/qframe/types/metrics"
 )
 
 const (
@@ -18,13 +19,13 @@ const (
 )
 
 type Plugin struct {
-	qtypes.Plugin
+	*qtypes_plugin.Plugin
 }
 
-func New(qChan qtypes.QChan, cfg *config.Config, name string) (Plugin, error) {
+func New(qChan qtypes_qchannel.QChan, cfg *config.Config, name string) (Plugin, error) {
 	var err error
 	p := Plugin{
-		Plugin: qtypes.NewNamedPlugin(qChan, cfg, pluginTyp, pluginPkg, name, version),
+		Plugin: qtypes_plugin.NewNamedPlugin(qChan, cfg, pluginTyp, pluginPkg, name, version),
 	}
 	return p, err
 }
@@ -50,7 +51,7 @@ func (p *Plugin) Run() {
 		pport := p.CfgStringOr("pperf.port", "8080")
 		go p.StartHttp(pport)
 	}
-	ims := qtypes.NewIntMemoryStats(p.Name)
+	ims := qtypes_metrics.NewIntMemoryStats(p.Name)
 	for {
 		select {
 		case <-ticker:

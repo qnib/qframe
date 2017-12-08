@@ -5,10 +5,12 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"github.com/qframe/types/plugin"
+	"github.com/qframe/types/helper"
+	"strings"
 )
 
 const (
-	version = "0.1.8"
+	version = "0.1.9"
 )
 
 type Base struct {
@@ -73,6 +75,23 @@ func (b *Base) ToJSON() map[string]interface{} {
 	res["source_success"] = b.SourceSuccess
 	res["tags"] = b.Tags
 	res["msg"] = b.Msg
+	return res
+}
+
+func (b *Base) ToFlatJSON() map[string]interface{} {
+	res := map[string]interface{}{
+		"msg_base_version": b.BaseVersion,
+		"msg_id": b.ID,
+		"msg_time": b.Time.String(),
+		"msg_time_unix_nano": fmt.Sprintf("%d", b.Time.UnixNano()),
+	}
+	res["msg_source_id"] = fmt.Sprintf("%d", b.SourceID)
+	res["msg_source_path"] = strings.Join(b.SourcePath, "-")
+	res["msg_source_success"] = fmt.Sprintf("%v", b.SourceSuccess)
+	rTags, err := qtypes_helper.PrefixFlatKV(b.Tags, res, "msg_tag")
+	if err == nil {
+		res = rTags
+	}
 	return res
 }
 

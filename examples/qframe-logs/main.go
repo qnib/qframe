@@ -12,6 +12,8 @@ import (
 	"github.com/qframe/collector-docker-events"
 	"github.com/qframe/collector-docker-logs"
 	"github.com/qframe/types/qchannel"
+	"github.com/qframe/handler-influxdb"
+	"github.com/qframe/collector-internal"
 )
 
 const (
@@ -41,13 +43,17 @@ func Run(ctx *cli.Context) {
 	qChan := qtypes_qchannel.NewQChan()
 	qChan.Broadcast()
 	// Start InfluxDB handler
-	/*phi, err := qhandler_influxdb.New(qChan, *cfg, "influxdb")
+	phi, err := qhandler_influxdb.New(qChan, cfg, "influxdb")
 	check_err(phi.Name, err)
-	go phi.Run()*/
-	// Start Elasticsearch handler
+	go phi.Run()
+	// Start Elasticsearch handler for logs
 	phe, err := qhandler_elasticsearch.New(qChan, cfg, "es_logstash")
 	check_err(phe.Name, err)
 	go phe.Run()
+	// Start Elasticsearch handler for events
+	phee, err := qhandler_elasticsearch.New(qChan, cfg, "es_events")
+	check_err(phee.Name, err)
+	go phee.Run()
 	// Inventory
 	pfi, err := qcache_inventory.New(qChan, cfg, "inventory")
 	check_err(pfi.Name, err)
@@ -69,9 +75,9 @@ func Run(ctx *cli.Context) {
 	check_err(pcdl.Name, err)
 	go pcdl.Run()
 	// Internal metrics collector
-	/*pci, err := qcollector_internal.New(qChan, cfg, "internal")
+	pci, err := qcollector_internal.New(qChan, cfg, "internal")
 	check_err(pci.Name, err)
-	go pci.Run()*/
+	go pci.Run()
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	wg.Wait()

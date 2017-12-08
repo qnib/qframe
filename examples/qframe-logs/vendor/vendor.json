@@ -489,7 +489,7 @@
 			"revisionTime": "2017-09-25T17:02:27Z"
 		},
 		{
-			"checksumSHA1": "TaUumfdk0+2aKxemgk1w78hnO14=",
+			"checksumSHA1": "MbkrFkXeUXJdvkJ9HhoUEuCabkA=",
 			"path": "github.com/qframe/collector-internal",
 			"revision": "47184c54b0190098d038fcebd8f9cc0f733e4bb9",
 			"revisionTime": "2017-07-12T09:22:08Z"
@@ -505,6 +505,12 @@
 			"path": "github.com/qframe/handler-elasticsearch",
 			"revision": "3e367c312ad8333012b7d53baf18674b365b477c",
 			"revisionTime": "2017-09-26T12:53:28Z"
+		},
+		{
+			"checksumSHA1": "gbsStW7q0ViQMFwPm2QZQ1iE1xc=",
+			"path": "github.com/qframe/handler-influxdb",
+			"revision": "607e86149b0ff9b75b6b439de51117829b099f19",
+			"revisionTime": "2017-09-11T16:49:51Z"
 		},
 		{
 			"checksumSHA1": "ZokxRO/FavchTs9BrbmiCZNrzO4=",
@@ -525,16 +531,22 @@
 			"revisionTime": "2017-09-19T11:31:24Z"
 		},
 		{
-			"checksumSHA1": "bu3TUas4vsPjIgv919gHxlXT+YE=",
+			"checksumSHA1": "eui+Vpf5HPkJOo7Tq/femYY+DEU=",
 			"path": "github.com/qframe/types/helper",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
 		},
 		{
-			"checksumSHA1": "fe6Oe/GteMc+Uo95rwouE3lvRIU=",
+			"checksumSHA1": "LZYH4iiCnbsqylb68zUoFYcj204=",
 			"path": "github.com/qframe/types/messages",
-			"revision": "d6b4b84df8114f925adc5779a562f94fa272121f",
-			"revisionTime": "2017-09-26T08:43:48Z"
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
+		},
+		{
+			"checksumSHA1": "VcvDaRyzPjXyYWBiH8yKUPh7qVw=",
+			"path": "github.com/qframe/types/metrics",
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
 		},
 		{
 			"checksumSHA1": "TegZuzgQuJzeyuMEEL7oSntDp2A=",
