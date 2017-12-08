@@ -1,15 +1,15 @@
 package qtypes_plugin
 
 import (
-	"fmt"
 	"log"
 	"strconv"
-	"strings"
-	"github.com/pkg/errors"
 	"github.com/zpatrick/go-config"
 	"github.com/qframe/types/qchannel"
+	"strings"
 	"github.com/qframe/types/helper"
+	"fmt"
 	"github.com/qframe/types/ticker"
+	"github.com/pkg/errors"
 )
 
 type Plugin struct {
@@ -19,22 +19,30 @@ type Plugin struct {
 	Pkg			string
 	Version 	string
 	Name 		string
+	LogOnlyPlugs 	[]string
+	LocalCfg 		map[string]string
 }
 
 
 func NewNamedPlugin(qChan qtypes_qchannel.QChan, cfg *config.Config, typ, pkg, name, version string) *Plugin {
 	b := NewBase(qChan, cfg)
-	return NewBasePlugin(b, typ, pkg, name, version)
+	return NewPlugin(b, typ, pkg, name, version)
 }
 
 
-func NewBasePlugin(b Base, typ, pkg, name, version string) *Plugin {
+func NewPlugin(b Base, typ, pkg, name, version string) *Plugin {
 	p := &Plugin{
 		Base: b,
 		Typ:   		typ,
 		Pkg:  		pkg,
 		Version:	version,
 		Name: 		name,
+		LogOnlyPlugs:   []string{},
+	}
+	p.LocalCfg, _  = b.Cfg.Settings()
+	logPlugs, err := p.Cfg.String("log.only-plugins")
+	if err == nil {
+		p.LogOnlyPlugs = strings.Split(logPlugs, ",")
 	}
 	return p
 }
@@ -47,7 +55,6 @@ func (p *Plugin) GetLogOnlyPlugs() []string {
 	return p.LogOnlyPlugs
 }
 
-// Config
 
 func (p *Plugin) CfgString(path string) (string, error) {
 	key := fmt.Sprintf("%s.%s.%s", p.Typ, p.Name, path)
@@ -59,6 +66,7 @@ func (p *Plugin) CfgString(path string) (string, error) {
 	}
 	return "", errors.New("Could not find "+key)
 }
+
 
 func (p *Plugin) CfgStringOr(path, alt string) string {
 	res, err := p.CfgString(path)
@@ -124,7 +132,6 @@ func (p *Plugin) GetCfgItems(key string) []string {
 	return strings.Split(inStr, ",")
 }
 
-// Log
 func (p *Plugin) Log(logLevel, msg string) {
 	if len(p.LogOnlyPlugs) != 0 && ! qtypes_helper.IsItem(p.LogOnlyPlugs, p.Name) {
 		return
@@ -142,7 +149,6 @@ func (p *Plugin) Log(logLevel, msg string) {
 	}
 }
 
-// Ticker
 func (p *Plugin) StartTicker(name string, durMs int) qtypes_ticker.Ticker {
 	p.Log("info", fmt.Sprintf("Start ticker '%s' with duration of %dms", name, durMs))
 	ticker := qtypes_ticker.NewTicker(name, durMs)

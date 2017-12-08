@@ -5,10 +5,12 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"github.com/qframe/types/plugin"
+	"github.com/qframe/types/helper"
+	"strings"
 )
 
 const (
-	version = "0.1.3"
+	version = "0.1.9"
 )
 
 type Base struct {
@@ -19,13 +21,18 @@ type Base struct {
 	SourcePath		[]string
 	SourceSuccess 	bool
 	Tags 			map[string]string // Additional KV
+	Msg				string
 }
 
 func NewBase(src string) Base {
 	return NewTimedBase(src, time.Now())
 }
 
-func NewTimedBase(src string, t time.Time) Base {
+func NewBaseMessage(src , msg string) Base {
+	return NewTimeBaseMessage(src, time.Now(), msg)
+}
+
+func NewTimeBaseMessage(src string, t time.Time, msg string) Base {
 	b := Base {
 		BaseVersion: version,
 		ID: "",
@@ -34,8 +41,13 @@ func NewTimedBase(src string, t time.Time) Base {
 		SourcePath: []string{src},
 		SourceSuccess: true,
 		Tags: map[string]string{},
+		Msg: msg,
 	}
 	return b
+}
+
+func NewTimedBase(src string, t time.Time) Base {
+	return NewTimeBaseMessage(src, t, "")
 }
 
 func NewBaseFromBase(src string, b Base) Base {
@@ -47,9 +59,9 @@ func NewBaseFromBase(src string, b Base) Base {
 		SourcePath: append(b.SourcePath, src),
 		SourceSuccess: b.SourceSuccess,
 		Tags: b.Tags,
+		Msg: "",
 	}
 }
-
 
 func (b *Base) ToJSON() map[string]interface{} {
 	res := map[string]interface{}{
@@ -62,6 +74,24 @@ func (b *Base) ToJSON() map[string]interface{} {
 	res["source_path"] = b.SourcePath
 	res["source_success"] = b.SourceSuccess
 	res["tags"] = b.Tags
+	res["msg"] = b.Msg
+	return res
+}
+
+func (b *Base) ToFlatJSON() map[string]interface{} {
+	res := map[string]interface{}{
+		"msg_base_version": b.BaseVersion,
+		"msg_id": b.ID,
+		"msg_time": b.Time.String(),
+		"msg_time_unix_nano": fmt.Sprintf("%d", b.Time.UnixNano()),
+	}
+	res["msg_source_id"] = fmt.Sprintf("%d", b.SourceID)
+	res["msg_source_path"] = strings.Join(b.SourcePath, "-")
+	res["msg_source_success"] = fmt.Sprintf("%v", b.SourceSuccess)
+	rTags, err := qtypes_helper.PrefixFlatKV(b.Tags, res, "msg_tag")
+	if err == nil {
+		res = rTags
+	}
 	return res
 }
 
@@ -116,7 +146,6 @@ func Sha1HashString(s string) string {
 	return fmt.Sprintf("%x", bs)
 }
 
-
 func (b *Base) StopProcessing(p *qtypes_plugin.Plugin, allowEmptyInput bool) bool {
 	if b.SourceID != 0 && p.MyID == b.SourceID {
 		msg := fmt.Sprintf("Msg came from the same GID (My:%d == %d:SourceID)", p.MyID, b.SourceID)
@@ -133,13 +162,14 @@ func (b *Base) StopProcessing(p *qtypes_plugin.Plugin, allowEmptyInput bool) boo
 	}
 	srcSuccess := p.CfgBoolOr("source-success", true)
 	if ! b.InputsMatch(inputs) {
-		p.Log("debug", fmt.Sprintf("InputsMatch(%v) != %s", inputs, b.GetLastSource()))
+		p.Log("trace", fmt.Sprintf("InputsMatch(%v) != %s", inputs, b.GetLastSource()))
 		return true
 	}
 	if b.SourceSuccess != srcSuccess {
 		msg := fmt.Sprintf("qm.SourceSuccess (%v) != (%v) srcSuccess", b.SourceSuccess, srcSuccess)
-		p.Log("debug", msg)
+		p.Log("trace", msg)
 		return true
 	}
+	b.AppendSource(p.Name)
 	return false
 }

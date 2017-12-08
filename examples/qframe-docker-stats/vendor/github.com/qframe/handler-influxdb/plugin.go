@@ -2,16 +2,17 @@ package qhandler_influxdb
 
 import (
 	"fmt"
-	"time"
 	"reflect"
-	"sync"
-	"github.com/zpatrick/go-config"
-	"github.com/influxdata/influxdb/client/v2"
 	"strings"
+	"sync"
+	"time"
+	"github.com/influxdata/influxdb/client/v2"
+	"github.com/zpatrick/go-config"
+
 	"github.com/qframe/types/plugin"
+	"github.com/qframe/types/ticker"
 	"github.com/qframe/types/qchannel"
 	"github.com/qframe/types/metrics"
-	"github.com/qframe/types/ticker"
 )
 
 const (
@@ -107,7 +108,8 @@ func (p *Plugin) Run() {
 	batchSize := p.CfgIntOr("batch-size", 100)
 	tick := p.CfgIntOr("ticker-msec", 1000)
 	p.Connect()
-	dc, _, tc := p.JoinChannels()
+	bg := p.QChan.Data.Join()
+	tc := p.QChan.Tick.Join()
 	bp := p.NewBatchPoints()
 	p.StartTicker("influxdb", tick)
 	dims := map[string]string{
@@ -118,10 +120,15 @@ func (p *Plugin) Run() {
 	lastTick := time.Now().AddDate(0,0,-1)
 	for {
 		select {
-		case val := <- dc.Read:
+		case val := <-bg.Read:
 			switch val.(type) {
+			// TODO: Change to qtypes_metrics.Metric
 			case qtypes_metrics.Metric:
 				m := val.(qtypes_metrics.Metric)
+				// TODO: Reimplement StopProcessing for qtypes_metrics.Metrics
+				/*if p.StopProcessingMetric(m, false) {
+					continue
+				}*/
 				pt, err := p.MetricsToBatchPoint(m)
 				if err != nil {
 					p.Log("error", fmt.Sprintf("%v", err))
@@ -137,7 +144,7 @@ func (p *Plugin) Run() {
 					bp.AddPoint(pt)
 					bp = p.WriteBatch(bp)
 					//took := time.Now().Sub(now)
-					//p.QChan.Data.Send(qtypes_metrics.NewStatsdPacket("influxdb.batch.write.ns",  fmt.Sprintf("%d", took.Nanoseconds()), "ms"))
+					//p.QChan.Data.Send(qtypes.NewStatsdPacket("influxdb.batch.write.ns",  fmt.Sprintf("%d", took.Nanoseconds()), "ms"))
 					lastTick = now
 				}
 			}

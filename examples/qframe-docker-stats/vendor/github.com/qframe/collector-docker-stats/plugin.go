@@ -170,7 +170,7 @@ func (p *Plugin) Run() {
 		p.QChan.SendData(h)
 		p.StartSupervisor(cnt.ID, strings.TrimPrefix(cnt.Names[0], "/"))
 	}
-	dc,_,_ := p.JoinChannels()
+	dc := p.QChan.Data.Join()
 	p.MsgCount["execEvent"] = 0
 	for {
 		select {

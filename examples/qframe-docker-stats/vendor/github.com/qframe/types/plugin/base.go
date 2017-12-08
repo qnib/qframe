@@ -1,15 +1,12 @@
 package qtypes_plugin
 
 import (
-	"strings"
 	"github.com/zpatrick/go-config"
-
 	"github.com/qframe/types/qchannel"
-	"github.com/grafov/bcast"
 )
 
 const (
-	version = "0.1.3"
+	version = "0.1.9"
 )
 
 type Base struct {
@@ -18,9 +15,8 @@ type Base struct {
 	QChan 			qtypes_qchannel.QChan
 	ErrChan			chan error
 	Cfg 			*config.Config
-	LogOnlyPlugs 	[]string
 	MsgCount		map[string]float64
-	LocalCfg 		map[string]string
+
 
 }
 
@@ -30,7 +26,6 @@ func NewBase(qChan qtypes_qchannel.QChan, cfg *config.Config) Base {
 		QChan: qChan,
 		ErrChan: make(chan error),
 		Cfg: cfg,
-		LogOnlyPlugs:   []string{},
 		MsgCount:       map[string]float64{
 			"received": 0.0,
 			"loopDrop": 0.0,
@@ -38,17 +33,10 @@ func NewBase(qChan qtypes_qchannel.QChan, cfg *config.Config) Base {
 			"successDrop": 0.0,
 		},
 	}
-	b.LocalCfg, _  = cfg.Settings()
-	logPlugs, err := cfg.String("log.only-plugins")
-	if err == nil {
-		b.LogOnlyPlugs = strings.Split(logPlugs, ",")
-	}
 	return b
 }
 
-func (p *Base) JoinChannels() (data, done, tick *bcast.Member) {
-	return p.QChan.Data.Join(), p.QChan.Done.Join(), p.QChan.Tick.Join()
-}
+
 /*
 func (p *Base) DispatchMsgCount() {
 
