@@ -483,7 +483,7 @@
 			"revisionTime": "2017-09-18T08:04:46Z"
 		},
 		{
-			"checksumSHA1": "F37Gd3BjgaKcpjVcdgulnVCvoUU=",
+			"checksumSHA1": "TF0Spne6asoR+ILTRFlayL27fUY=",
 			"path": "github.com/qframe/collector-docker-logs",
 			"revision": "92ce188c370824fc236f475af67d7a85173584f8",
 			"revisionTime": "2017-09-25T17:02:27Z"
@@ -501,10 +501,10 @@
 			"revisionTime": "2017-09-18T12:48:46Z"
 		},
 		{
-			"checksumSHA1": "4VhBO/2yhmgS/LviSZnh9+45pbE=",
+			"checksumSHA1": "JV8u8nlCjY4hzw4Jhke5tYzPBPE=",
 			"path": "github.com/qframe/handler-elasticsearch",
-			"revision": "871da08222f4c829bb967f2d05047481cf0003d6",
-			"revisionTime": "2017-09-15T13:12:18Z"
+			"revision": "3e367c312ad8333012b7d53baf18674b365b477c",
+			"revisionTime": "2017-09-26T12:53:28Z"
 		},
 		{
 			"checksumSHA1": "ZokxRO/FavchTs9BrbmiCZNrzO4=",
@@ -531,10 +531,10 @@
 			"revisionTime": "2017-09-19T11:31:24Z"
 		},
 		{
-			"checksumSHA1": "aYjsG0MFHOGuXk7BcR+UWvW8Vf8=",
+			"checksumSHA1": "fe6Oe/GteMc+Uo95rwouE3lvRIU=",
 			"path": "github.com/qframe/types/messages",
-			"revision": "8e6bbc025301248fbcc7dc67058ed515d34d2b1d",
-			"revisionTime": "2017-09-19T11:31:24Z"
+			"revision": "d6b4b84df8114f925adc5779a562f94fa272121f",
+			"revisionTime": "2017-09-26T08:43:48Z"
 		},
 		{
 			"checksumSHA1": "TegZuzgQuJzeyuMEEL7oSntDp2A=",
@@ -639,5 +639,5 @@
 			"revisionTime": "2017-11-16T09:02:43Z"
 		}
 	],
-	"rootPath": "github.com/qnib/qframe"
+	"rootPath": "github.com/qnib/qframe/examples/qframe-logs"
 }

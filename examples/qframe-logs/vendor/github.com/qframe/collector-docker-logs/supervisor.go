@@ -54,11 +54,11 @@ func (cs ContainerSupervisor) Run() {
 		var base qtypes_messages.Base
 		lTime, err := cs.fuzzyParseTime(sText[0])
 		if err != nil {
-			base = qtypes_messages.NewBase(cs.Name)
+			base = qtypes_messages.NewBaseMessage(cs.Name, shostL)
 		} else {
-			base = qtypes_messages.NewTimedBase(cs.Name, lTime)
+			base = qtypes_messages.NewTimeBaseMessage(cs.Name, lTime, shostL)
 		}
-		qm := qtypes_messages.NewContainerMessage(base, cs.Container, shostL)
+		qm := qtypes_messages.NewContainerMessage(base, cs.Container)
 		qm.AddEngineInfo(cs.Info)
 		cs.Log("debug", fmt.Sprintf("MsgDigest:'%s'  | Container '%s': %s", qm.GetMessageDigest(), cs.Container.Name, shostL))
 		cs.qChan.Data.Send(qm)

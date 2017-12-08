@@ -179,9 +179,9 @@ func (p *Plugin) indexContainerEvent(msg qtypes_docker_events.ContainerEvent) (e
 
 func (p *Plugin) indexContainerMessage(msg qtypes_messages.ContainerMessage) (err error) {
 	data := map[string]interface{}{
-		"msg_version": 	msg.BaseVersion,
 		"Timestamp":   	msg.Time.Format("2006-01-02T15:04:05.999999-07:00"),
-		"msg":         	msg.Message.ToJSON(),
+		"base":        	msg.ToJSON(),
+		"Message":      msg.Msg,
 		"docker_engine":  map[string]interface{}{
 			"name": msg.Engine.Name,
 			"id": msg.Engine.ID,
@@ -192,9 +192,9 @@ func (p *Plugin) indexContainerMessage(msg qtypes_messages.ContainerMessage) (er
 		"swarm": map[string]interface{}{
 			"node_id": msg.Engine.Swarm.NodeID,
 		},
-		"source_path": 	strings.Join(msg.SourcePath,","),
 	}
 	if msg.GetContainerName() != "" {
+		// TODO: Should be like the docker_engine section above
 		data["container_id"] = msg.Container.ID
 		data["container_name"] = msg.GetContainerName()
 		data["container_cmd"] = strings.Join(msg.Container.Config.Cmd, " ")

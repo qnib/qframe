@@ -72,6 +72,7 @@ func (b *Base) ToJSON() map[string]interface{} {
 	res["source_path"] = b.SourcePath
 	res["source_success"] = b.SourceSuccess
 	res["tags"] = b.Tags
+	res["msg"] = b.Msg
 	return res
 }
 
