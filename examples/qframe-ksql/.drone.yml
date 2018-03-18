@@ -1,0 +1,10 @@
+workspace:
+  base: /usr/local/src
+  path: github.com/qnib/qframe/examples/qframe-ksql
+
+pipeline:
+  x86:
+    image: qnib/uplain-golang
+    commands:
+      - mkdir -p usr/bin/
+      - go build -o ./usr/bin/qframe-ksql_x86

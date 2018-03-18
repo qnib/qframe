@@ -17,6 +17,7 @@ import (
 	"github.com/qframe/types/qchannel"
 	"github.com/qframe/types/plugin"
 	"github.com/qframe/types/metrics"
+	"github.com/docker/docker/api/types"
 )
 
 const (
@@ -40,6 +41,7 @@ type ContainerSupervisor struct {
 	Container docker.Container
 	Com 	chan interface{} // Channel to communicate with goroutine
 	cli 	*docker.Client
+	engInfo types.Info
 	qChan 	qtypes_qchannel.QChan
 }
 
@@ -61,7 +63,7 @@ func (cs ContainerSupervisor) Run() {
 	df := docker.ListContainersOptions{
 		Filters: filter,
 	}
-	info, _ := cs.cli.Info()
+	info , _ := cs.cli.Info()
 	engineLabels := SplitLabels(info.Labels)
 	cnt, _ := cs.cli.ListContainers(df)
 	if len(cnt) != 1 {
@@ -110,6 +112,7 @@ type Plugin struct {
 	*qtypes_plugin.Plugin
 	cli *docker.Client
 	mobyClient *client.Client
+	engInfo types.Info
 	sMap map[string]ContainerSupervisor
 }
 
@@ -136,7 +139,7 @@ func (p *Plugin) Run() {
 		p.Log("error", fmt.Sprintf("Could not connect fsouza/go-dockerclient to '%s': %v", dockerHost, err))
 		return
 	}
-	info, err := p.cli.Info()
+	info, err := p.mobyClient.Info(context.Background())
 	if err != nil {
 		p.Log("error", fmt.Sprintf("Error during Info(): %v >err> %s", info, err))
 		return
@@ -163,7 +166,7 @@ func (p *Plugin) Run() {
 			continue
 		}
 		b := qtypes_messages.NewTimedBase(p.Name, time.Unix(cnt.Created, 0))
-		de := qtypes_docker_events.NewDockerEvent(b, event)
+		de := qtypes_docker_events.NewDockerEvent(b, info, event)
 		ce := qtypes_docker_events.NewContainerEvent(de, cjson)
 		h := qtypes_health.NewHealthBeat(b, "routine.stats", ce.Container.ID[:13], "start")
 		p.Log("info", "Send routine.stats HealthBeat for "+h.Actor)

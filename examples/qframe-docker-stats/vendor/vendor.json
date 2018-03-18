@@ -793,16 +793,22 @@
 			"revisionTime": "2017-09-18T08:38:42Z"
 		},
 		{
-			"checksumSHA1": "v//paEicsK6ZcOAwQm/DGDBZDpE=",
+			"checksumSHA1": "61M900ev4ILWiX9+aNXCvTs5M9U=",
 			"path": "github.com/qframe/collector-docker-events",
-			"revision": "ca10b042e0b9263b033f2d6452dc06eb6d605516",
-			"revisionTime": "2017-07-20T07:47:08Z"
+			"revision": "2fe0c644d6aec76fed298da66999f23e2357e006",
+			"revisionTime": "2017-10-07T12:42:31Z"
 		},
 		{
-			"checksumSHA1": "i1cxwXHZzoZC/R4W2u8HVco25is=",
+			"checksumSHA1": "qsaHqRaBNkLJp/5czmdPtyKnewA=",
 			"path": "github.com/qframe/collector-docker-stats",
 			"revision": "ddbe95923f65e6e732bf2fb9e83119f22637ad4b",
 			"revisionTime": "2017-09-19T12:00:05Z"
+		},
+		{
+			"checksumSHA1": "MbkrFkXeUXJdvkJ9HhoUEuCabkA=",
+			"path": "github.com/qframe/collector-internal",
+			"revision": "47184c54b0190098d038fcebd8f9cc0f733e4bb9",
+			"revisionTime": "2017-07-12T09:22:08Z"
 		},
 		{
 			"checksumSHA1": "KvlxXu+cFB59OdKt7b5X5wdcHWU=",
@@ -819,14 +825,14 @@
 		{
 			"checksumSHA1": "ZokxRO/FavchTs9BrbmiCZNrzO4=",
 			"path": "github.com/qframe/types/constants",
-			"revision": "2758c866567c68edd13e71ee9ff2389885d57d93",
-			"revisionTime": "2017-08-14T20:17:02Z"
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
 		},
 		{
-			"checksumSHA1": "qTxHjY8oFOfYzlsu582xuqckC50=",
+			"checksumSHA1": "pH/6NQn2nuVzHCysLu4wEH6zCw8=",
 			"path": "github.com/qframe/types/docker-events",
-			"revision": "d6b4b84df8114f925adc5779a562f94fa272121f",
-			"revisionTime": "2017-09-26T08:43:48Z"
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
 		},
 		{
 			"checksumSHA1": "RbffwoQrK/+xX6AiM4lFynZklXc=",
@@ -873,8 +879,14 @@
 		{
 			"checksumSHA1": "aWT8tf2NLTwFLrrTSEZCraccjMI=",
 			"path": "github.com/qframe/types/ticker",
-			"revision": "2758c866567c68edd13e71ee9ff2389885d57d93",
-			"revisionTime": "2017-08-14T20:17:02Z"
+			"revision": "de8e76eb8ae6acf719916349d8732844b8b29e34",
+			"revisionTime": "2017-12-08T09:47:13Z"
+		},
+		{
+			"checksumSHA1": "Z7bgwXJ61bNZ0fak+Ip/5KRKhJY=",
+			"path": "github.com/qnib/qframe/examples/qframe-docker-stats",
+			"revision": "c0c347ce0a693e47689f77c99de3db3b96957eef",
+			"revisionTime": "2017-12-08T13:43:00Z"
 		},
 		{
 			"checksumSHA1": "5+eS1Ticg5wkpsdNoPiST3OQcIg=",
