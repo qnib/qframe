@@ -55,12 +55,17 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "ETC event collector based on qframe, inspired by qcollect,logstash and fullerite"
 	app.Usage = "qframe-ksql [options]"
+	app.Author = "Christian Kniep <christian@qnib.org>"
 	app.Version = "0.1.2"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "config",
 			Value: "qframe.yml",
 			Usage: "Config file, will overwrite flag default if present.",
+		},
+		cli.BoolFlag{
+			Name: "test",
+			Usage: "Connects to local kafka-broker and waits for a docker-event to occur.",
 		},
 	}
 	app.Action = Run

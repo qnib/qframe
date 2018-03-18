@@ -14,11 +14,12 @@ import (
 
 type Plugin struct {
 	Base
-	MyID		int
-	Typ			string
-	Pkg			string
-	Version 	string
-	Name 		string
+	MyID			int
+	Typ				string
+	Pkg				string
+	Version 		string
+	TestDurationSec int
+	Name 			string
 	LogOnlyPlugs 	[]string
 	LocalCfg 		map[string]string
 }
@@ -39,6 +40,7 @@ func NewPlugin(b Base, typ, pkg, name, version string) *Plugin {
 		Name: 		name,
 		LogOnlyPlugs:   []string{},
 	}
+	p.TestDurationSec, _ = b.Cfg.IntOr("test-duration-sec", 0)
 	p.LocalCfg, _  = b.Cfg.Settings()
 	logPlugs, err := p.Cfg.String("log.only-plugins")
 	if err == nil {
